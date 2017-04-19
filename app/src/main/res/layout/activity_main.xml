@@ -4,29 +4,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     tools:context="hu.obuda.uni.nik.labyrinthmaze.MainActivity">
+
+
 
     <android.support.v7.widget.AppCompatButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/save"
-        android:text="save"
-        />
+        android:text="Játék"
+        android:id="@+id/playbutton"
+        android:layout_marginTop="72dp"
+
+        android:layout_alignStart="@+id/exitbutton" />
+
     <android.support.v7.widget.AppCompatButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/load"
-android:layout_below="@+id/save"
-        android:text="load"/>
-   <android.support.v7.widget.AppCompatEditText
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:layout_below="@+id/load"
-       android:id="@+id/editText"/>
-    <android.support.v7.widget.AppCompatTextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/editText"
-        android:id="@+id/result"/>
+        android:text="Eredmények"
+        android:id="@+id/highscorebutton"
+        android:layout_marginStart="125dp"
+        android:layout_above="@+id/exitbutton"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="121dp" />
+
+    <android.support.v7.widget.AppCompatButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#efefef"
+        android:text="Kilépés"
+        android:id="@+id/exitbutton"
+        android:layout_marginBottom="31dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignEnd="@+id/highscorebutton"
+        android:layout_marginEnd="11dp" />
+
+
 
 </RelativeLayout>
