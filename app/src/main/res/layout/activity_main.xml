@@ -1,44 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    android:gravity="center"
+    android:orientation="vertical"
     tools:context="hu.obuda.uni.nik.labyrinthmaze.MainActivity">
-
-
-
     <android.support.v7.widget.AppCompatButton
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Játék"
+        android:text="@string/main_btn_game"
+        android:background="@color/btn_primary"
         android:id="@+id/playbutton"
-        android:layout_marginTop="72dp"
-
-        android:layout_alignStart="@+id/exitbutton" />
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/mainactivity_btn_margin"
+        />
 
     <android.support.v7.widget.AppCompatButton
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Eredmények"
+        android:text="@string/main_btn_ranks"
+        android:background="@color/btn_primary"
         android:id="@+id/highscorebutton"
-        android:layout_marginStart="125dp"
-        android:layout_above="@+id/exitbutton"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="121dp" />
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/mainactivity_btn_margin"
+        />
 
     <android.support.v7.widget.AppCompatButton
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#efefef"
-        android:text="Kilépés"
+        android:background="@color/btn_secondary"
+        android:text="@string/main_btn_exit"
         android:id="@+id/exitbutton"
-        android:layout_marginBottom="31dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignEnd="@+id/highscorebutton"
-        android:layout_marginEnd="11dp" />
-
-
-
-</RelativeLayout>
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/mainactivity_btn_margin"
+        />
+</LinearLayout>
