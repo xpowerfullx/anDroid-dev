@@ -1,11 +1,19 @@
 package hu.obuda.uni.nik.labyrinthmaze;
+import android.content.Intent;
 import android.widget.Button;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import hu.obuda.uni.nik.labyrinthmaze.database.DBHandler;
+
+import static android.R.attr.onClick;
+import static android.R.attr.value;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -31,23 +39,30 @@ public class MainActivity extends AppCompatActivity {
 
 
         final Button HighScoreTableButton = (Button) findViewById(R.id.highscorebutton);
-        HighScoreTableButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
 
-                // Perform action on click
+        HighScoreTableButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, HighScoreTable.class);
+                TextView editText = (TextView) findViewById(R.id.resultTextView);
+                startActivity(intent);
             }
         });
+
+
 
         final Button ExitButton = (Button) findViewById(R.id.exitbutton);
-        HighScoreTableButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
 
-
-                // Perform action on click
-            }
-        });
 
     }
+    public void sendMessage(View view) {
+        Intent intent = new Intent(this, HighScoreTable.class);
+        TextView editText = (TextView) findViewById(R.id.resultTextView);
+        String message = editText.getText().toString();
+        intent.putExtra("asd", message);
+        startActivity(intent);
+    }
+
 /*
         dbHandler = new DBHandler(this);
 
