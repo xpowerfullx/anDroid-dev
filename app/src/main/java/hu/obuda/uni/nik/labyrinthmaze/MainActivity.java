@@ -5,15 +5,7 @@ import android.os.Bundle;
 
 import android.view.View;
 
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.database.Cursor;
-
-import database.DBHandler;
-import database.RankContract;
+import hu.obuda.uni.nik.labyrinthmaze.database.DBHandler;
 
 
 public class MainActivity extends AppCompatActivity {

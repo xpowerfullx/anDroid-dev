@@ -1,4 +1,4 @@
-package database;
+package hu.obuda.uni.nik.labyrinthmaze.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

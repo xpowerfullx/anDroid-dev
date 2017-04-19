@@ -1,4 +1,4 @@
-package database;
+package hu.obuda.uni.nik.labyrinthmaze.database;
 
 /**
  * Created by HP on 19-Apr-17.
