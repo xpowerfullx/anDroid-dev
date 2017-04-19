@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
         HighScoreTableButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-
                 // Perform action on click
             }
         });
