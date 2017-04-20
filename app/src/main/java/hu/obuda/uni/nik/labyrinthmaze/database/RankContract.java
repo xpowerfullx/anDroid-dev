@@ -13,6 +13,6 @@ public final class RankContract {
         public static final String TABLE_NAME = "users";
         public static final String COLUMN_NAME_ID = "id";
         public static final String COLUMN_NAME_NAME = "name";
-        public static final String COLUMN_NAME_TIME = "time";
+        public static final String COLUMN_NAME_SCORE = "score";
     }
 }

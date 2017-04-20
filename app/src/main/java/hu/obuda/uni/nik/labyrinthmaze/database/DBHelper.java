@@ -38,7 +38,7 @@ public class DBHelper extends SQLiteOpenHelper {
             ("CREATE TABLE " + RankContract.DatabaseColumns.TABLE_NAME + "(" +
                     RankContract.DatabaseColumns.COLUMN_NAME_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     RankContract.DatabaseColumns.COLUMN_NAME_NAME + "   VARCHAR(255)," +
-                    RankContract.DatabaseColumns.COLUMN_NAME_TIME + "   VARCHAR(255)" + ")");
+                    RankContract.DatabaseColumns.COLUMN_NAME_SCORE + "   INTEGER" + ")");
 
     private static final String SQL_DELETE_USERS =
             "DROP TABLE IF EXISTS " + RankContract.DatabaseColumns.TABLE_NAME;

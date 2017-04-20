@@ -12,8 +12,8 @@ import android.database.sqlite.SQLiteDatabase;
 public class DBHandler {
 
     DBHelper dbHelpher;
-    private int dBCount=0;
-    private final int maxDbCount=10;
+    private int dBCount = 0;
+    private final int maxDbCount = 10;
 
     public DBHandler(Context context) {
         dbHelpher = new DBHelper(context);
@@ -24,27 +24,24 @@ public class DBHandler {
         SQLiteDatabase db = dbHelpher.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(RankContract.DatabaseColumns.COLUMN_NAME_NAME, name);
-        values.put(RankContract.DatabaseColumns.COLUMN_NAME_TIME, time);
+        values.put(RankContract.DatabaseColumns.COLUMN_NAME_SCORE, time);
 
-        if(dBCount<maxDbCount)
-        {
+        if (dBCount < maxDbCount) {
             long newRowID = db.insert(RankContract.DatabaseColumns.TABLE_NAME, null, values);
             dBCount++;
             db.close();
             return newRowID;
-        }
-        else
-        {
+        } else {
             long newRowID = db.insert(RankContract.DatabaseColumns.TABLE_NAME, null, values);
             db.close();
             return newRowID;
         }
     }
 
-    private int GetDbCount(){
-        String countQuery = "SELECT * FROM "+ RankContract.DatabaseColumns.TABLE_NAME;
+    public int GetDbCount() {
+        String countQuery = "SELECT * FROM " + RankContract.DatabaseColumns.TABLE_NAME;
         SQLiteDatabase db = dbHelpher.getReadableDatabase();
-        Cursor cursor = db.rawQuery(countQuery,null);
+        Cursor cursor = db.rawQuery(countQuery, null);
         int cnt = cursor.getCount();
         return cnt;
     }
@@ -53,10 +50,10 @@ public class DBHandler {
         SQLiteDatabase db = dbHelpher.getReadableDatabase();
         String[] projection = {
                 RankContract.DatabaseColumns.COLUMN_NAME_NAME,
-                RankContract.DatabaseColumns.COLUMN_NAME_TIME
+                RankContract.DatabaseColumns.COLUMN_NAME_SCORE
         };
-        //String sortOder = RankContract.DatabaseColumns.COLUMN_NAME_TIME + " DESC";
-        Cursor result = db.query(RankContract.DatabaseColumns.TABLE_NAME,null,null,null,null,null,null);
+        String sortOder = RankContract.DatabaseColumns.COLUMN_NAME_SCORE + " DESC";
+        Cursor result = db.query(RankContract.DatabaseColumns.TABLE_NAME, null, null, null, null, null, sortOder);
         result.moveToFirst();
         db.close();
         return result;
