@@ -31,7 +31,9 @@ public class MainActivity extends AppCompatActivity {
         PlayButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
+                Intent intent = new Intent(MainActivity.this, game.class);
 
+                startActivity(intent);
                 // Perform action on click
             }
         });
