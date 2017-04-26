@@ -48,20 +48,19 @@ public class HighScoreAdapter extends BaseAdapter {
         View listHighScoreView = convertView;
         if (listHighScoreView == null)
             listHighScoreView = View.inflate(parent.getContext(), R.layout.listitem_high_score, null);
-        LinearLayout baseLinearLayout = (LinearLayout) listHighScoreView.findViewById(R.id.base);
         TextView rankTextView = (TextView) listHighScoreView.findViewById(R.id.rank);
         TextView nameTextView = (TextView) listHighScoreView.findViewById(R.id.name);
         TextView scoreTextView = (TextView) listHighScoreView.findViewById(R.id.score);
 
         HighScore highScore = highScores.get(position);
         if (highScore.getRank() % 2 == 1){
-            baseLinearLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.rankings_green));
+            listHighScoreView.setBackgroundColor(ContextCompat.getColor(context, R.color.rankings_green));
         } else {
-            baseLinearLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.rankings_orange));
+            listHighScoreView.setBackgroundColor(ContextCompat.getColor(context, R.color.rankings_orange));
         }
-        rankTextView.setText(highScore.getRank());
+        rankTextView.setText(String.valueOf(highScore.getRank()));
         nameTextView.setText(highScore.getName());
-        scoreTextView.setText(highScore.getScore());
+        scoreTextView.setText(String.valueOf(highScore.getScore()));
         return listHighScoreView;
     }
 }
