@@ -8,6 +8,9 @@ import android.graphics.RectF;
 import android.view.KeyEvent;
 import android.view.View;
 
+import java.util.ArrayList;
+
+
 /**
  * Created by Tomi on 2017. 04. 26..
  */
@@ -27,13 +30,14 @@ public class GameView extends View {
         private float ballSpeedY = 3;
         private RectF ballBounds;
         private Paint paint;
+        private ArrayList<RectF> Rects;
 
 
         public GameView(Context context) {
             super(context);
             ballBounds = new RectF();
             paint = new Paint();
-
+            Rects=new ArrayList<RectF>();
             //to enable keypad
             this.setFocusable(true);
             this.requestFocus();
@@ -80,7 +84,44 @@ public class GameView extends View {
         }
 
 
-        @Override
+    private  void DrawMap(Canvas canvas)
+    {
+        int [] [] map=ReadLevels.GetMap();
+
+        for( int i = 0; i < map.length; i++ )
+        {
+            for( int j = 0; j < map[i].length; j++ )
+            {
+                if(map[i][j]==1) {
+                    Rects.add(new RectF() );
+                }
+
+
+            }
+        }
+
+        //kirajzolás
+        int counter=0;
+
+        for( int i = 0; i < map.length; i++ )
+        {
+            for( int j = 0; j < map[i].length; j++ )
+            {
+                if(map[i][j]==1) {
+                    Rects.get(counter).set(i*20, j*20, 20, 20);
+                    paint.setColor(Color.BLACK);
+                    canvas.drawRect(Rects.get(counter), paint);
+                    counter++;
+                }
+
+
+            }
+        }
+    }
+
+
+
+    @Override
         public void onSizeChanged(int w, int h, int oldW, int oldH) {
 
             xMax = w-1;
