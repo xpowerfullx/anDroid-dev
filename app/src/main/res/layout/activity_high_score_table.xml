@@ -6,10 +6,19 @@
     android:layout_height="match_parent"
     tools:context="hu.obuda.uni.nik.labyrinthmaze.HighScoreTable">
 
-
-    <android.support.v7.widget.AppCompatTextView
+    <TextView
+        android:id="@+id/highScoreTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Rangsor"
+        android:textAlignment="center"
+        android:textSize="@dimen/listitem_highscoreRankText"
+        android:textStyle="bold"
+        android:layout_margin="@dimen/highscoreactivity_titleMargin"/>
+    <ListView
+        android:id="@+id/highScoreList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/resultTextView"/>
-
+        android:layout_below="@id/highScoreTitle"
+        />
 </RelativeLayout>

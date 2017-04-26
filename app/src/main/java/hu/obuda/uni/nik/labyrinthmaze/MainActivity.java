@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, HighScoreTable.class);
-                TextView editText = (TextView) findViewById(R.id.resultTextView);
+                //TextView editText = (TextView) findViewById(R.id.resultTextView);
                 startActivity(intent);
             }
         });

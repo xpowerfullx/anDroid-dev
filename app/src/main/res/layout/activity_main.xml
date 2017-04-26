@@ -15,7 +15,7 @@
         android:id="@+id/playbutton"
         android:gravity="center"
         android:layout_gravity="center"
-        android:layout_margin="@dimen/mainactivity_btn_margin"
+        android:layout_margin="@dimen/mainactivity_btnMargin"
         />
 
     <android.support.v7.widget.AppCompatButton
@@ -26,7 +26,7 @@
         android:id="@+id/highscorebutton"
         android:gravity="center"
         android:layout_gravity="center"
-        android:layout_margin="@dimen/mainactivity_btn_margin"
+        android:layout_margin="@dimen/mainactivity_btnMargin"
         />
 
     <android.support.v7.widget.AppCompatButton
@@ -37,6 +37,6 @@
         android:id="@+id/exitbutton"
         android:gravity="center"
         android:layout_gravity="center"
-        android:layout_margin="@dimen/mainactivity_btn_margin"
+        android:layout_margin="@dimen/mainactivity_btnMargin"
         />
 </LinearLayout>
