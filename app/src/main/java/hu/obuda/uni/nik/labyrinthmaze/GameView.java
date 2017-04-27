@@ -113,13 +113,9 @@ public class GameView extends View {
                     canvas.drawRect(Rects.get(counter), paint);
                     counter++;
                 }
-
-
             }
         }
     }
-
-
 
     @Override
         public void onSizeChanged(int w, int h, int oldW, int oldH) {
@@ -127,44 +123,6 @@ public class GameView extends View {
             xMax = w-1;
             yMax = h-1;
         }
-
-
-        @Override
-        public boolean onKeyUp(int keyCode, KeyEvent event) {
-            switch (keyCode) {
-                case KeyEvent.KEYCODE_DPAD_RIGHT:
-                    ballSpeedX++;
-                    break;
-                case KeyEvent.KEYCODE_DPAD_LEFT:
-                    ballSpeedX--;
-                    break;
-                case KeyEvent.KEYCODE_DPAD_UP:
-                    ballSpeedY--;
-                    break;
-                case KeyEvent.KEYCODE_DPAD_DOWN:
-                    ballSpeedY++;
-                    break;
-                case KeyEvent.KEYCODE_DPAD_CENTER:
-                    ballSpeedX = 0;
-                    ballSpeedY = 0;
-                    break;
-                case KeyEvent.KEYCODE_A:
-
-                    float maxRadius = (xMax > yMax) ? yMax / 2 * 0.9f  : xMax / 2 * 0.9f;
-                    if (ballRadius < maxRadius) {
-                        ballRadius *= 1.05;
-                    }
-                    break;
-                case KeyEvent.KEYCODE_Z:
-                    if (ballRadius > 20) {
-                        ballRadius *= 0.95;
-                    }
-                    break;
-            }
-            return true;
-        }
-
-
     }
 
 

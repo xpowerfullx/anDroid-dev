@@ -12,8 +12,7 @@ import android.database.sqlite.SQLiteDatabase;
 public class DBHandler {
 
     DBHelper dbHelpher;
-    private int dBCount = 0;
-    private final int maxDbCount = 10;
+
 
     public DBHandler(Context context) {
         dbHelpher = new DBHelper(context);
@@ -26,16 +25,9 @@ public class DBHandler {
         values.put(RankContract.DatabaseColumns.COLUMN_NAME_NAME, name);
         values.put(RankContract.DatabaseColumns.COLUMN_NAME_SCORE, time);
 
-        if (dBCount < maxDbCount) {
-            long newRowID = db.insert(RankContract.DatabaseColumns.TABLE_NAME, null, values);
-            dBCount++;
-            db.close();
-            return newRowID;
-        } else {
-            long newRowID = db.insert(RankContract.DatabaseColumns.TABLE_NAME, null, values);
-            db.close();
-            return newRowID;
-        }
+        long newRowID = db.insert(RankContract.DatabaseColumns.TABLE_NAME, null, values);
+        db.close();
+        return newRowID;
     }
 
     public int GetDbCount() {
@@ -48,10 +40,6 @@ public class DBHandler {
 
     public Cursor loadUsers() {
         SQLiteDatabase db = dbHelpher.getReadableDatabase();
-        String[] projection = {
-                RankContract.DatabaseColumns.COLUMN_NAME_NAME,
-                RankContract.DatabaseColumns.COLUMN_NAME_SCORE
-        };
         String sortOder = RankContract.DatabaseColumns.COLUMN_NAME_SCORE + " DESC";
         Cursor result = db.query(RankContract.DatabaseColumns.TABLE_NAME, null, null, null, null, null, sortOder);
         result.moveToFirst();
