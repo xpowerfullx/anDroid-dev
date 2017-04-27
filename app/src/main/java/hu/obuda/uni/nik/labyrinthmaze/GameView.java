@@ -112,10 +112,15 @@ public class GameView extends View {
                     paint.setColor(Color.BLACK);
                     canvas.drawRect(Rects.get(counter), paint);
                     counter++;
+                    
                 }
+
+
             }
         }
     }
+
+
 
     @Override
         public void onSizeChanged(int w, int h, int oldW, int oldH) {
@@ -123,6 +128,11 @@ public class GameView extends View {
             xMax = w-1;
             yMax = h-1;
         }
+
+
+
+
+
     }
 
 
