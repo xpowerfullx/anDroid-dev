@@ -112,6 +112,7 @@ public class GameView extends View {
                     paint.setColor(Color.BLACK);
                     canvas.drawRect(Rects.get(counter), paint);
                     counter++;
+                    
                 }
 
 
