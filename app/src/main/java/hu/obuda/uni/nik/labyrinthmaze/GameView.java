@@ -1,10 +1,14 @@
 package hu.obuda.uni.nik.labyrinthmaze;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.RectF;
+import android.view.Display;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -18,69 +22,63 @@ public class GameView extends View {
 
 
 
-        private int xMin = 0;
-        private int xMax;
-        private int yMin = 0;
-        private int yMax;
-        private float ballRadius = 40;
-        private float ballX = ballRadius + 20;
-        private float ballY = ballRadius + 40;
-        private float ballSpeedX = 5;
-        private float ballSpeedY = 3;
-        private RectF ballBounds;
+    private float xPos, xAccel, xVel = 0.0f;
+    private float yPos, yAccel, yVel = 0.0f;
+    private float xMax, yMax;
+    private Bitmap ball;
+
+
         private Paint paint;
         private ArrayList<RectF> Rects;
 
 
-        public GameView(Context context) {
+        public GameView(Context context,Display disp) {
             super(context);
-            ballBounds = new RectF();
-            paint = new Paint();
-            Rects=new ArrayList<RectF>();
-            //to enable keypad
-            this.setFocusable(true);
-            this.requestFocus();
+
+            Point size = new Point();
+            disp.getSize(size);
+            xMax = (float) size.x - 100;
+            yMax = (float) size.y - 100;
+
+            Bitmap ballSrc = BitmapFactory.decodeResource(getResources(), R.drawable.ball);
+            final int dstWidth = 100;
+            final int dstHeight = 100;
+            ball = Bitmap.createScaledBitmap(ballSrc, dstWidth, dstHeight, true);
+
         }
 
 
-        @Override
-        protected void onDraw(Canvas canvas) {
 
-            ballBounds.set(ballX-ballRadius, ballY-ballRadius, ballX+ballRadius, ballY+ballRadius);
-            paint.setColor(Color.GREEN);
-            canvas.drawOval(ballBounds, paint);
+    public void updateBall(float xAccel,float yAccel) {
+        float frameTime = 0.666f;
+        xVel += (xAccel * frameTime);
+        yVel += (yAccel * frameTime);
 
+        float xS = (xVel / 2) * frameTime;
+        float yS = (yVel / 2) * frameTime;
 
-            update();
+        xPos -= xS;
+        yPos -= yS;
 
-
-            try {
-                Thread.sleep(60);
-            } catch (InterruptedException e) { }
-
-            invalidate();  
+        if (xPos > xMax) {
+            xPos = xMax;
+        } else if (xPos < 0) {
+            xPos = 0;
         }
 
-
-        private void update() {
-
-            ballY += ballSpeedY;
-
-            if (ballX + ballRadius > xMax) {
-                ballSpeedX = -ballSpeedX;
-                ballX = xMax-ballRadius;
-            } else if (ballX - ballRadius < xMin) {
-                ballSpeedX = -ballSpeedX;
-                ballX = xMin+ballRadius;
-            }
-            if (ballY + ballRadius > yMax) {
-                ballSpeedY = -ballSpeedY;
-                ballY = yMax - ballRadius;
-            } else if (ballY - ballRadius < yMin) {
-                ballSpeedY = -ballSpeedY;
-                ballY = yMin + ballRadius;
-            }
+        if (yPos > yMax) {
+            yPos = yMax;
+        } else if (yPos < 0) {
+            yPos = 0;
         }
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        canvas.drawBitmap(ball, xPos, yPos, null);
+        invalidate();
+    }
+
 
 
     private  void DrawMap(Canvas canvas)
@@ -121,12 +119,7 @@ public class GameView extends View {
 
 
 
-    @Override
-        public void onSizeChanged(int w, int h, int oldW, int oldH) {
 
-            xMax = w-1;
-            yMax = h-1;
-        }
 
 
 
