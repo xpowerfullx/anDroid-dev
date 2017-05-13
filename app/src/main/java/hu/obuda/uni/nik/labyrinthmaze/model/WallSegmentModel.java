@@ -26,10 +26,10 @@ public class WallSegmentModel {
         this.segmentX = segmentX;
         this.segmentY = segmentY;
         segmentType = SIMPLE_SEGMENT;
-        northWall = true;
-        southWall = true;
-        westWall = true;
-        eastWall = true;
+        //northWall = true;
+       // southWall = true;
+       // westWall = true;
+        //eastWall = true;
 
     }
 

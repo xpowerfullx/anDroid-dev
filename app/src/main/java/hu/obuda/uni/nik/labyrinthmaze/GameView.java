@@ -13,6 +13,8 @@ import android.view.View;
 
 import java.util.ArrayList;
 
+import hu.obuda.uni.nik.labyrinthmaze.model.WallSegmentModel;
+
 
 /**
  * Created by Tomi on 2017. 04. 26..
@@ -69,31 +71,75 @@ public class GameView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.drawBitmap(ball, xPos, yPos, null);
+        DrawMap(canvas);
         invalidate();
     }
 
-    private void DrawMap(Canvas canvas) {
-        int[][] map = ReadLevelsClass.GetMap();
+    private  void DrawMap(Canvas canvas)
+    {
+        MapGeneratorClass mapgen= new MapGeneratorClass();
 
-        for (int i = 0; i < map.length; i++) {
-            for (int j = 0; j < map[i].length; j++) {
-                if (map[i][j] == 1) {
-                    Rects.add(new RectF());
-                }
+
+        WallSegmentModel[] [] map=new WallSegmentModel[10][10];
+
+        for( int i = 0; i < map.length; i++ )
+        {
+            for( int j = 0; j < map[i].length; j++ )
+            {
+                WallSegmentModel model = new WallSegmentModel(i,j);
+                model.setNorthWall(true);
+                model.setSouthWall(false);
+                model.setSouthWall(false);
+                model.setSouthWall(false);
+                map[i][j]=model;
+
             }
         }
 
-        //kirajzolás
-        int counter = 0;
+        int valami=0;
 
-        for (int i = 0; i < map.length; i++) {
-            for (int j = 0; j < map[i].length; j++) {
-                if (map[i][j] == 1) {
-                    Rects.get(counter).set(i * 20, j * 20, 20, 20);
-                    paint.setColor(Color.BLACK);
-                    canvas.drawRect(Rects.get(counter), paint);
-                    counter++;
+        //kirajzolás
+        int counter=0;
+
+        paint = new Paint();
+        paint.setColor(Color.GREEN);
+
+        int sizewidth=getWidth()/10;
+        int sizehieght=getHeight()/10;
+
+        for( int i = 0; i < map.length; i++ )
+        {
+            for( int j = 0; j < map[i].length; j++ )
+            {
+
+                if(map[i][j].isNorthWall()==true) {
+
+
+                    //canvas.drawRect(10, 10, 20, 20, paint);
+                    canvas.drawLine(sizewidth*i, sizehieght*j, sizewidth*i+sizewidth, sizehieght*j, paint);
+                    //  canvas.drawLine(20, 0, 0, 20, paint);
+
                 }
+                if(map[i][j].isSouthWall()==true)
+                {
+
+                    //canvas.drawRect(10, 10, 20, 20, paint);
+                    canvas.drawLine(sizewidth*i, sizehieght*j+sizehieght, sizewidth*i+sizewidth, sizehieght*j+sizehieght, paint);
+                }
+                if(map[i][j].isEastWall()==true)
+                {
+
+                    //canvas.drawRect(10, 10, 20, 20, paint);
+                    canvas.drawLine(sizewidth*i+sizewidth, sizehieght*j, sizewidth*i+sizewidth, sizehieght*j+sizehieght, paint);
+                }
+                if(map[i][j].isWestWall()==true)
+                {
+
+                    //canvas.drawRect(10, 10, 20, 20, paint);
+                    canvas.drawLine(sizewidth*i, sizehieght*j, sizewidth*i, sizehieght*j+sizehieght, paint);
+                }
+
+
             }
         }
     }
