@@ -10,6 +10,8 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.RectF;
+import android.graphics.Region;
+import android.graphics.RegionIterator;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.View;
@@ -35,6 +37,7 @@ public class GameView extends View {
     Path path;
     Paint paintWall;
 
+
     private Paint paint;
     private ArrayList<RectF> Rects;
 
@@ -43,13 +46,8 @@ public class GameView extends View {
 
         Point size = new Point();
         disp.getSize(size);
-        xMax = (float) size.x - 100;
-        yMax = (float) size.y - 100;
 
-        Bitmap ballSrc = BitmapFactory.decodeResource(getResources(), R.drawable.ball);
-        final int dstWidth = 100;
-        final int dstHeight = 100;
-        ball = Bitmap.createScaledBitmap(ballSrc, dstWidth, dstHeight, true);
+
 
         mapgen = new MapGenerator();
         map = mapgen.generateNewMap();
@@ -66,6 +64,15 @@ public class GameView extends View {
 
         int sizewidth= (displayMetrics.widthPixels - 10)/10;
         int sizeheight= (displayMetrics.heightPixels - 50)/10;
+
+        Bitmap ballSrc = BitmapFactory.decodeResource(getResources(), R.drawable.ball);
+        final int dstWidth = (displayMetrics.widthPixels - 10)/11;
+        final int dstHeight = (displayMetrics.widthPixels - 10)/11;
+
+        xMax = (displayMetrics.widthPixels - 80);
+        yMax =(displayMetrics.heightPixels - 80);
+        ball = Bitmap.createScaledBitmap(ballSrc, dstWidth, dstHeight, true);
+
 
         //get wall lines for path
         for (int i = 0; i <10; i++){
@@ -90,6 +97,8 @@ public class GameView extends View {
 
             }
         }
+
+
 
     }
 
