@@ -43,13 +43,17 @@ public class MapGeneratorClass {
             if (hasNextTile(coordX, coordY)) {
                 int dir = R.nextInt(4);
                 carveWall(coordX, coordY, dir);
+                coordX = roadMap.get(roadMap.size() -1).getSegmentX();
+                coordY = roadMap.get(roadMap.size() -1).getSegmentY();
             }
             else {
                 if (!roadMap.isEmpty()) {
                     finalRoadMap.add(roadMap.get(roadMap.size() - 1));
                     roadMap.remove(roadMap.size() -1 );
-                    coordX=roadMap.get(roadMap.size() -1).getSegmentX();
-                    coordY=roadMap.get(roadMap.size() -1).getSegmentY();
+                    if (!roadMap.isEmpty()) {
+                        coordX=roadMap.get(roadMap.size() -1).getSegmentX();
+                        coordY=roadMap.get(roadMap.size() -1).getSegmentY();
+                    }
                 }
             }
         }
