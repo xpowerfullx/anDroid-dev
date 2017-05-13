@@ -30,6 +30,7 @@ public class WallSegmentModel {
         southWall = true;
         westWall = true;
         eastWall = true;
+        
     }
 
     public int getSegmentType() {

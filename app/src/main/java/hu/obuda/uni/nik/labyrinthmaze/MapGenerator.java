@@ -27,6 +27,7 @@ public class MapGenerator {
         finalRoadMap = new ArrayList<WallSegmentModel>();
 
 
+
     }
 
     public WallSegmentModel[][] generateNewMap(){
