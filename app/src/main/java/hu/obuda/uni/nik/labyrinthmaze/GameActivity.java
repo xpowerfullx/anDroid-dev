@@ -26,6 +26,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         setContentView(R.layout.activity_game);
         Display display = getWindowManager().getDefaultDisplay();
         View gameview = new GameView(this,display);
+        
         setContentView(gameview);
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 
