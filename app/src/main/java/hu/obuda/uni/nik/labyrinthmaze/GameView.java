@@ -16,7 +16,7 @@ import android.view.View;
 
 import java.util.ArrayList;
 
-import hu.obuda.uni.nik.labyrinthmaze.model.WallSegmentModel;
+import hu.obuda.uni.nik.labyrinthmaze.model.WallSegment;
 
 
 /**
@@ -30,8 +30,8 @@ public class GameView extends View {
     private float xMax, yMax;
     private Bitmap ball;
     private float wall = 25.0f;
-    MapGeneratorClass mapgen;
-    WallSegmentModel[][] map;
+    MapGenerator mapgen;
+    WallSegment[][] map;
     Path path;
     Paint paintWall;
 
@@ -51,7 +51,7 @@ public class GameView extends View {
         final int dstHeight = 100;
         ball = Bitmap.createScaledBitmap(ballSrc, dstWidth, dstHeight, true);
 
-        mapgen = new MapGeneratorClass();
+        mapgen = new MapGenerator();
         map = mapgen.generateNewMap();
         path = new Path();
         paintWall = new Paint();
