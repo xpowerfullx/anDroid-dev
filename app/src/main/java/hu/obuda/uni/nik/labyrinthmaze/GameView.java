@@ -7,9 +7,11 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.view.Display;
 import android.view.View;
+
 
 import java.util.ArrayList;
 
@@ -26,6 +28,9 @@ public class GameView extends View {
     private float yPos, yAccel, yVel = 0.0f;
     private float xMax, yMax;
     private Bitmap ball;
+
+
+   // private ArrayList<DrawLine> Lines;
 
     private Paint paint;
     private ArrayList<RectF> Rects;
@@ -88,9 +93,13 @@ public class GameView extends View {
             {
                 WallSegmentModel model = new WallSegmentModel(i,j);
                 model.setNorthWall(true);
-                model.setSouthWall(false);
-                model.setSouthWall(false);
-                model.setSouthWall(false);
+               // model.setWestWall(true);
+               // model.setSouthWall(true);
+               // model.setSouthWall(true);
+
+               // model.setEastWall(true);
+                //model.se(true);
+                //model.setSouthWall(true);
                 map[i][j]=model;
 
             }
@@ -114,9 +123,12 @@ public class GameView extends View {
 
                 if(map[i][j].isNorthWall()==true) {
 
+                   // Rect line= new Rect(sizewidth*i, sizehieght*j, sizewidth, 2);
 
+                    //canvas.drawRect(line, paint);
+                    canvas.drawLine(sizewidth*i, sizehieght*j, sizewidth*i+sizewidth, sizehieght*j+sizehieght, paint);
                     //canvas.drawRect(10, 10, 20, 20, paint);
-                    canvas.drawLine(sizewidth*i, sizehieght*j, sizewidth*i+sizewidth, sizehieght*j, paint);
+
                     //  canvas.drawLine(20, 0, 0, 20, paint);
 
                 }
@@ -124,17 +136,20 @@ public class GameView extends View {
                 {
 
                     //canvas.drawRect(10, 10, 20, 20, paint);
+                    //Rect line= new Rect(sizewidth*i, sizehieght*j+sizehieght, sizewidth*i+sizewidth, sizehieght*j+sizehieght);
                     canvas.drawLine(sizewidth*i, sizehieght*j+sizehieght, sizewidth*i+sizewidth, sizehieght*j+sizehieght, paint);
                 }
                 if(map[i][j].isEastWall()==true)
                 {
-
+                    //Rect line= new Rect(sizewidth*i+sizewidth, sizehieght*j, sizewidth*i+sizewidth, sizehieght*j+sizehieght);
+                   // canvas.drawRect(line, paint);
                     //canvas.drawRect(10, 10, 20, 20, paint);
                     canvas.drawLine(sizewidth*i+sizewidth, sizehieght*j, sizewidth*i+sizewidth, sizehieght*j+sizehieght, paint);
                 }
                 if(map[i][j].isWestWall()==true)
                 {
-
+                    //Rect line= new Rect(sizewidth*i, sizehieght*j, sizewidth*i, sizehieght*j+sizehieght);
+                    //canvas.drawRect(line, paint);
                     //canvas.drawRect(10, 10, 20, 20, paint);
                     canvas.drawLine(sizewidth*i, sizehieght*j, sizewidth*i, sizehieght*j+sizehieght, paint);
                 }
