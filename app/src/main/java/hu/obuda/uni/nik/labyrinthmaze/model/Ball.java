@@ -8,7 +8,7 @@ import android.graphics.RectF;
  * Created by Adam on 2017. 04. 26..
  */
 
-public class BallModel {
+public class Ball {
     private float ballRadius;
     private float ballX;
     private float ballY;
@@ -16,7 +16,7 @@ public class BallModel {
     private float ballSpeedY;
     private Paint paint;
 
-    public BallModel() {
+    public Ball() {
         ballRadius = 40;
         ballX = 0;
         ballY = 0;

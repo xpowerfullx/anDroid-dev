@@ -10,7 +10,7 @@ import java.util.List;
 
 import hu.obuda.uni.nik.labyrinthmaze.adapter.HighScoreAdapter;
 import hu.obuda.uni.nik.labyrinthmaze.database.DBHandler;
-import hu.obuda.uni.nik.labyrinthmaze.model.HighScoreClass;
+import hu.obuda.uni.nik.labyrinthmaze.model.HighScore;
 
 public class HighScoreTableActivity extends AppCompatActivity {
 
@@ -23,7 +23,7 @@ public class HighScoreTableActivity extends AppCompatActivity {
 
         ListView highScoreListView = (ListView) findViewById(R.id.highScoreList);
         generateTestData();
-        List<HighScoreClass> highScores = loadHighScores();
+        List<HighScore> highScores = loadHighScores();
         HighScoreAdapter highScoreAdapter = new HighScoreAdapter(this, highScores);
         highScoreListView.setAdapter(highScoreAdapter);
     }
@@ -44,9 +44,9 @@ public class HighScoreTableActivity extends AppCompatActivity {
         }
     }
 
-    private List<HighScoreClass> loadHighScores() {
+    private List<HighScore> loadHighScores() {
         Cursor dbCursor = dbHandler.loadUsers();
-        List<HighScoreClass> highScores = new ArrayList<HighScoreClass>();
+        List<HighScore> highScores = new ArrayList<HighScore>();
         int rank = 1;
         while (!dbCursor.isAfterLast()) {
             long id = dbCursor.getLong(0);
@@ -59,7 +59,7 @@ public class HighScoreTableActivity extends AppCompatActivity {
         return highScores;
     }
 
-    private HighScoreClass createHighScoreObject(int rank, String name, int score) {
-        return new HighScoreClass(rank, name, score);
+    private HighScore createHighScoreObject(int rank, String name, int score) {
+        return new HighScore(rank, name, score);
     }
 }

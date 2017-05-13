@@ -21,9 +21,8 @@ public class MainActivity extends AppCompatActivity {
         final Button PlayButton = (Button) findViewById(R.id.playbutton);
         PlayButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, GameActivity.class);
+                Intent intent = new Intent(MainActivity.this, NewPlayerActivity.class);
                 startActivity(intent);
-                // Perform action on click
             }
         });
 

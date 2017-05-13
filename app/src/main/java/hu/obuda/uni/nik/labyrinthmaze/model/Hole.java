@@ -7,14 +7,14 @@ import android.graphics.Paint;
  * Created by Adam on 2017. 04. 27..
  */
 
-public class HoleModel {
+public class Hole {
 
     private float holeX;
     private float holeY;
     private int holeRadius;
     private Paint holeColor;
 
-    public HoleModel(float holeX, float holeY) {
+    public Hole(float holeX, float holeY) {
         this.holeX = holeX;
         this.holeY = holeY;
         holeRadius = 50;

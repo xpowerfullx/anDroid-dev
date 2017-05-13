@@ -4,33 +4,33 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import hu.obuda.uni.nik.labyrinthmaze.model.WallSegmentModel;
+import hu.obuda.uni.nik.labyrinthmaze.model.WallSegment;
 
 /**
  * Created by Adam on 2017. 05. 13..
  */
 
-public class MapGeneratorClass {
+public class MapGenerator {
     public static final int NORTH = 0;
     public static final int SOUTH = 1;
     public static final int WEST = 2;
     public static final int EAST = 3;
 
     private Random R = new Random();
-    private WallSegmentModel[][] mapMatrix;
-    private List<WallSegmentModel> roadMap;
-    private List<WallSegmentModel> finalRoadMap;
+    private WallSegment[][] mapMatrix;
+    private List<WallSegment> roadMap;
+    private List<WallSegment> finalRoadMap;
 
-    public MapGeneratorClass() {
-        mapMatrix = new WallSegmentModel[10][10];
-        roadMap = new ArrayList<WallSegmentModel>();
-        finalRoadMap = new ArrayList<WallSegmentModel>();
+    public MapGenerator() {
+        mapMatrix = new WallSegment[10][10];
+        roadMap = new ArrayList<WallSegment>();
+        finalRoadMap = new ArrayList<WallSegment>();
     }
 
-    public WallSegmentModel[][] generateNewMap(){
+    public WallSegment[][] generateNewMap(){
         for (int i = 0; i<10; i++){
             for (int j = 0; j < 10; j++) {
-                mapMatrix[i][j] = new WallSegmentModel(i, j);
+                mapMatrix[i][j] = new WallSegment(i, j);
             }
         }
 
