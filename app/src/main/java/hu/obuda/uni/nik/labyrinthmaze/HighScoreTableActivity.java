@@ -1,21 +1,18 @@
 package hu.obuda.uni.nik.labyrinthmaze;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import hu.obuda.uni.nik.labyrinthmaze.adapter.HighScoreAdapter;
 import hu.obuda.uni.nik.labyrinthmaze.database.DBHandler;
-import hu.obuda.uni.nik.labyrinthmaze.database.RankContract;
-import hu.obuda.uni.nik.labyrinthmaze.model.HighScore;
+import hu.obuda.uni.nik.labyrinthmaze.model.HighScoreClass;
 
-public class HighScoreTable extends AppCompatActivity {
+public class HighScoreTableActivity extends AppCompatActivity {
 
     DBHandler dbHandler = new DBHandler(this);
 
@@ -26,7 +23,7 @@ public class HighScoreTable extends AppCompatActivity {
 
         ListView highScoreListView = (ListView) findViewById(R.id.highScoreList);
         generateTestData();
-        List<HighScore> highScores = loadHighScores();
+        List<HighScoreClass> highScores = loadHighScores();
         HighScoreAdapter highScoreAdapter = new HighScoreAdapter(this, highScores);
         highScoreListView.setAdapter(highScoreAdapter);
     }
@@ -47,9 +44,9 @@ public class HighScoreTable extends AppCompatActivity {
         }
     }
 
-    private List<HighScore> loadHighScores() {
+    private List<HighScoreClass> loadHighScores() {
         Cursor dbCursor = dbHandler.loadUsers();
-        List<HighScore> highScores = new ArrayList<HighScore>();
+        List<HighScoreClass> highScores = new ArrayList<HighScoreClass>();
         int rank = 1;
         while (!dbCursor.isAfterLast()) {
             long id = dbCursor.getLong(0);
@@ -62,7 +59,7 @@ public class HighScoreTable extends AppCompatActivity {
         return highScores;
     }
 
-    private HighScore createHighScoreObject(int rank, String name, int score) {
-        return new HighScore(rank, name, score);
+    private HighScoreClass createHighScoreObject(int rank, String name, int score) {
+        return new HighScoreClass(rank, name, score);
     }
 }

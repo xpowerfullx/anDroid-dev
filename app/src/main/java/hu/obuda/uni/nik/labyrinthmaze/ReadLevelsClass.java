@@ -4,7 +4,7 @@ package hu.obuda.uni.nik.labyrinthmaze;
  * Created by Tomi on 2017. 04. 27..
  */
 
-public class ReadLevels {
+public class ReadLevelsClass {
     public  static int [][] GetMap()
     {
         int[][] array = {

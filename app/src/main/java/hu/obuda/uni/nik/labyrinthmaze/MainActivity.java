@@ -5,16 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import hu.obuda.uni.nik.labyrinthmaze.database.DBHandler;
-import hu.obuda.uni.nik.labyrinthmaze.database.RankContract;
-
-import static android.R.attr.onClick;
-import static android.R.attr.value;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -31,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         PlayButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                Intent intent = new Intent(MainActivity.this, game.class);
+                Intent intent = new Intent(MainActivity.this, GameActivity.class);
 
                 startActivity(intent);
                 // Perform action on click
@@ -44,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         HighScoreTableButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, HighScoreTable.class);
+                Intent intent = new Intent(MainActivity.this, HighScoreTableActivity.class);
                 startActivity(intent);
             }
         });

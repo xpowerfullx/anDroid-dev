@@ -5,7 +5,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.view.KeyEvent;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -86,7 +85,7 @@ public class GameView extends View {
 
     private  void DrawMap(Canvas canvas)
     {
-        int [] [] map=ReadLevels.GetMap();
+        int [] [] map= ReadLevelsClass.GetMap();
 
         for( int i = 0; i < map.length; i++ )
         {

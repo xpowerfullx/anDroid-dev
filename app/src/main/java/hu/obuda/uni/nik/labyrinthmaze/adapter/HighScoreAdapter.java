@@ -5,13 +5,12 @@ import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
 
 import hu.obuda.uni.nik.labyrinthmaze.R;
-import hu.obuda.uni.nik.labyrinthmaze.model.HighScore;
+import hu.obuda.uni.nik.labyrinthmaze.model.HighScoreClass;
 
 /**
  * Created by Budai Krisztián on 2017. 04. 26.
@@ -19,10 +18,10 @@ import hu.obuda.uni.nik.labyrinthmaze.model.HighScore;
 
 public class HighScoreAdapter extends BaseAdapter {
 
-    private List<HighScore> highScores;
+    private List<HighScoreClass> highScores;
     private Context context;
 
-    public HighScoreAdapter(Context context, List<HighScore> highScores) {
+    public HighScoreAdapter(Context context, List<HighScoreClass> highScores) {
         this.context = context;
         this.highScores = highScores;
     }
@@ -52,7 +51,7 @@ public class HighScoreAdapter extends BaseAdapter {
         TextView nameTextView = (TextView) listHighScoreView.findViewById(R.id.name);
         TextView scoreTextView = (TextView) listHighScoreView.findViewById(R.id.score);
 
-        HighScore highScore = highScores.get(position);
+        HighScoreClass highScore = highScores.get(position);
         if (highScore.getRank() % 2 == 1){
             listHighScoreView.setBackgroundColor(ContextCompat.getColor(context, R.color.rankings_green));
         } else {
