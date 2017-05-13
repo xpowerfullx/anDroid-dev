@@ -18,6 +18,12 @@ import hu.obuda.uni.nik.labyrinthmaze.model.HighScoreClass;
 
 public class HighScoreAdapter extends BaseAdapter {
 
+    static class HighScoreViewHolder {
+        TextView rankTextView;
+        TextView nameTextView;
+        TextView scoreTextView;
+    }
+
     private List<HighScoreClass> highScores;
     private Context context;
 
@@ -44,22 +50,31 @@ public class HighScoreAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        View listHighScoreView = convertView;
-        if (listHighScoreView == null)
-            listHighScoreView = View.inflate(parent.getContext(), R.layout.listitem_high_score, null);
-        TextView rankTextView = (TextView) listHighScoreView.findViewById(R.id.rank);
-        TextView nameTextView = (TextView) listHighScoreView.findViewById(R.id.name);
-        TextView scoreTextView = (TextView) listHighScoreView.findViewById(R.id.score);
+        HighScoreViewHolder holder;
+
+        if (convertView == null) {
+            convertView = View.inflate(parent.getContext(), R.layout.listitem_high_score, null);
+            holder = new HighScoreViewHolder();
+            holder.rankTextView = (TextView) convertView.findViewById(R.id.rank);
+            holder.nameTextView = (TextView) convertView.findViewById(R.id.name);
+            holder.scoreTextView = (TextView) convertView.findViewById(R.id.score);
+            convertView.setTag(holder);
+        } else {
+            holder = (HighScoreViewHolder) convertView.getTag();
+        }
 
         HighScoreClass highScore = highScores.get(position);
-        if (highScore.getRank() % 2 == 1){
-            listHighScoreView.setBackgroundColor(ContextCompat.getColor(context, R.color.rankings_green));
+
+        if (highScore.getRank() % 2 == 1) {
+            convertView.setBackgroundColor(ContextCompat.getColor(context, R.color.rankings_green));
         } else {
-            listHighScoreView.setBackgroundColor(ContextCompat.getColor(context, R.color.rankings_orange));
+            convertView.setBackgroundColor(ContextCompat.getColor(context, R.color.rankings_orange));
         }
-        rankTextView.setText(String.valueOf(highScore.getRank()));
-        nameTextView.setText(highScore.getName());
-        scoreTextView.setText(String.valueOf(highScore.getScore()));
-        return listHighScoreView;
+
+        holder.rankTextView.setText(String.valueOf(highScore.getRank()));
+        holder.nameTextView.setText(highScore.getName());
+        holder.scoreTextView.setText(String.valueOf(highScore.getScore()));
+
+        return convertView;
     }
 }

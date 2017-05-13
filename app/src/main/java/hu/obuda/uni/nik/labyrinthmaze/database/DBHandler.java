@@ -13,11 +13,9 @@ public class DBHandler {
 
     DBHelper dbHelpher;
 
-
     public DBHandler(Context context) {
         dbHelpher = new DBHelper(context);
     }
-
 
     public long insertRank(String name, double time) {
         SQLiteDatabase db = dbHelpher.getWritableDatabase();
@@ -31,11 +29,13 @@ public class DBHandler {
     }
 
     public int GetDbCount() {
-        String countQuery = "SELECT * FROM " + RankContract.DatabaseColumns.TABLE_NAME;
+        String countQuery = String.format("SELECT COUNT(%s) FROM %s", RankContract.DatabaseColumns.COLUMN_NAME_ID, RankContract.DatabaseColumns.TABLE_NAME);
         SQLiteDatabase db = dbHelpher.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
-        int cnt = cursor.getCount();
-        return cnt;
+        int count = cursor.getCount();
+        db.close();
+        cursor.close();
+        return count;
     }
 
     public Cursor loadUsers() {

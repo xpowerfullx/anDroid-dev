@@ -25,9 +25,6 @@ public class MapGeneratorClass {
         mapMatrix = new WallSegmentModel[10][10];
         roadMap = new ArrayList<WallSegmentModel>();
         finalRoadMap = new ArrayList<WallSegmentModel>();
-
-
-
     }
 
     public WallSegmentModel[][] generateNewMap(){
@@ -36,6 +33,7 @@ public class MapGeneratorClass {
                 mapMatrix[i][j] = new WallSegmentModel(i, j);
             }
         }
+
         int coordX = R.nextInt(10);
         int coordY = R.nextInt(10);
         roadMap.add(mapMatrix[coordX][coordY]);
@@ -54,7 +52,6 @@ public class MapGeneratorClass {
                     coordY=roadMap.get(roadMap.size() -1).getSegmentY();
                 }
             }
-
         }
 
         return mapMatrix;
@@ -85,7 +82,6 @@ public class MapGeneratorClass {
             return true;
         }
         return false;
-
     }
     private void carveWall(int coordX, int coordY, int dir){
         //NORTH
@@ -121,6 +117,4 @@ public class MapGeneratorClass {
             return;
         }
     }
-
-
 }

@@ -18,21 +18,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         final Button PlayButton = (Button) findViewById(R.id.playbutton);
         PlayButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
                 Intent intent = new Intent(MainActivity.this, GameActivity.class);
-
                 startActivity(intent);
                 // Perform action on click
             }
         });
 
-
         final Button HighScoreTableButton = (Button) findViewById(R.id.highscorebutton);
-
         HighScoreTableButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -40,11 +35,5 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
-
-        final Button ExitButton = (Button) findViewById(R.id.exitbutton);
-
-
     }
 }

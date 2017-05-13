@@ -15,9 +15,8 @@ import android.view.View;
 
 public class GameActivity extends AppCompatActivity implements SensorEventListener2 {
 
-
     private SensorManager sensorManager;
-    GameView gameView;
+    private GameView gameView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,12 +24,10 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_game);
         Display display = getWindowManager().getDefaultDisplay();
-        gameView = new GameView(this,display);
+        gameView = new GameView(this, display);
 
         setContentView(gameView);
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-
-
     }
 
     protected void onStart() {
@@ -53,8 +50,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
             float xAccel = sensorEvent.values[0];
             float yAccel = -sensorEvent.values[1];
-            gameView.updateBall(xAccel,yAccel);
-
+            gameView.updateBall(xAccel, yAccel);
         }
     }
 
@@ -62,6 +58,4 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
     }
-
-
 }

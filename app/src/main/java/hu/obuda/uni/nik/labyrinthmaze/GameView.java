@@ -20,36 +20,29 @@ import java.util.ArrayList;
 
 public class GameView extends View {
 
-
-
     private float xPos, xAccel, xVel = 0.0f;
     private float yPos, yAccel, yVel = 0.0f;
     private float xMax, yMax;
     private Bitmap ball;
 
+    private Paint paint;
+    private ArrayList<RectF> Rects;
 
-        private Paint paint;
-        private ArrayList<RectF> Rects;
+    public GameView(Context context, Display disp) {
+        super(context);
 
+        Point size = new Point();
+        disp.getSize(size);
+        xMax = (float) size.x - 100;
+        yMax = (float) size.y - 100;
 
-        public GameView(Context context,Display disp) {
-            super(context);
+        Bitmap ballSrc = BitmapFactory.decodeResource(getResources(), R.drawable.ball);
+        final int dstWidth = 100;
+        final int dstHeight = 100;
+        ball = Bitmap.createScaledBitmap(ballSrc, dstWidth, dstHeight, true);
+    }
 
-            Point size = new Point();
-            disp.getSize(size);
-            xMax = (float) size.x - 100;
-            yMax = (float) size.y - 100;
-
-            Bitmap ballSrc = BitmapFactory.decodeResource(getResources(), R.drawable.ball);
-            final int dstWidth = 100;
-            final int dstHeight = 100;
-            ball = Bitmap.createScaledBitmap(ballSrc, dstWidth, dstHeight, true);
-
-        }
-
-
-
-   public void updateBall(float xAccel,float yAccel) {
+    public void updateBall(float xAccel, float yAccel) {
         float frameTime = 0.666f;
         xVel += (xAccel * frameTime);
         yVel += (yAccel * frameTime);
@@ -79,53 +72,29 @@ public class GameView extends View {
         invalidate();
     }
 
+    private void DrawMap(Canvas canvas) {
+        int[][] map = ReadLevelsClass.GetMap();
 
-
-    private  void DrawMap(Canvas canvas)
-    {
-        int [] [] map= ReadLevelsClass.GetMap();
-
-        for( int i = 0; i < map.length; i++ )
-        {
-            for( int j = 0; j < map[i].length; j++ )
-            {
-                if(map[i][j]==1) {
-                    Rects.add(new RectF() );
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[i].length; j++) {
+                if (map[i][j] == 1) {
+                    Rects.add(new RectF());
                 }
-
-
             }
         }
 
         //kirajzolás
-        int counter=0;
+        int counter = 0;
 
-        for( int i = 0; i < map.length; i++ )
-        {
-            for( int j = 0; j < map[i].length; j++ )
-            {
-                if(map[i][j]==1) {
-                    Rects.get(counter).set(i*20, j*20, 20, 20);
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[i].length; j++) {
+                if (map[i][j] == 1) {
+                    Rects.get(counter).set(i * 20, j * 20, 20, 20);
                     paint.setColor(Color.BLACK);
                     canvas.drawRect(Rects.get(counter), paint);
                     counter++;
-                    
                 }
-
-
             }
         }
     }
-
-
-
-
-
-
-
-
-
-    }
-
-
-
+}
