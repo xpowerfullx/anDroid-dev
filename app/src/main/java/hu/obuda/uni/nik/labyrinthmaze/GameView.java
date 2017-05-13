@@ -49,7 +49,7 @@ public class GameView extends View {
 
 
 
-    public void updateBall(float xAccel,float yAccel) {
+   public void updateBall(float xAccel,float yAccel) {
         float frameTime = 0.666f;
         xVel += (xAccel * frameTime);
         yVel += (yAccel * frameTime);

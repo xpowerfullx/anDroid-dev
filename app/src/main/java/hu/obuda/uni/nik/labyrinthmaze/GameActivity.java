@@ -17,7 +17,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
 
 
     private SensorManager sensorManager;
-
+    GameView gameView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,9 +25,9 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_game);
         Display display = getWindowManager().getDefaultDisplay();
-        View gameview = new GameView(this,display);
-        
-        setContentView(gameview);
+        gameView = new GameView(this,display);
+
+        setContentView(gameView);
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 
 
@@ -53,7 +53,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
             float xAccel = sensorEvent.values[0];
             float yAccel = -sensorEvent.values[1];
-            updateBall(xAccel,yAccel);
+            gameView.updateBall(xAccel,yAccel);
 
         }
     }
