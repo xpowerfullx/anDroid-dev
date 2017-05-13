@@ -69,11 +69,11 @@ public class NewPlayerActivity extends AppCompatActivity {
                         startActivity(intent);
                         finish();
                     } else {
-                        editTextView.setText(getString(R.string.new_player_info_fault));
+                        infoTextView.setText(getString(R.string.new_player_info_fault));
                         setInfoTextToVisible();
                     }
                 } else {
-                    editTextView.setText(getString(R.string.new_player_info_missing));
+                    infoTextView.setText(getString(R.string.new_player_info_missing));
                     setInfoTextToVisible();
                 }
             }

@@ -10,6 +10,6 @@
     <dimen name="listitem_highscorePointText">20sp</dimen>
     <dimen name="activity_newPlayerTitleText">45sp</dimen>
     <dimen name="activity_newPlayerNameText">35sp</dimen>
-    <dimen name="activity_newPlayerInfoText">35sp</dimen>
+    <dimen name="activity_newPlayerInfoText">15sp</dimen>
     <dimen name="activity_ButtonText">20sp</dimen>
 </resources>
