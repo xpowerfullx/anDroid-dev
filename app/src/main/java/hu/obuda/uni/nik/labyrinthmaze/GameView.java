@@ -1,13 +1,16 @@
 package hu.obuda.uni.nik.labyrinthmaze;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.RectF;
+import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.View;
 
@@ -26,6 +29,11 @@ public class GameView extends View {
     private float yPos, yAccel, yVel = 0.0f;
     private float xMax, yMax;
     private Bitmap ball;
+    private float wall = 25.0f;
+    MapGeneratorClass mapgen;
+    WallSegmentModel[][] map;
+    Path path;
+    Paint paintWall;
 
     private Paint paint;
     private ArrayList<RectF> Rects;
@@ -42,6 +50,47 @@ public class GameView extends View {
         final int dstWidth = 100;
         final int dstHeight = 100;
         ball = Bitmap.createScaledBitmap(ballSrc, dstWidth, dstHeight, true);
+
+        mapgen = new MapGeneratorClass();
+        map = mapgen.generateNewMap();
+        path = new Path();
+        paintWall = new Paint();
+        paintWall.setColor(Color.BLACK);
+        paintWall.setStrokeWidth(2);
+        paintWall.setStyle(Paint.Style.STROKE);
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        ((Activity) getContext()).getWindowManager()
+                .getDefaultDisplay()
+                .getMetrics(displayMetrics);
+
+
+        int sizewidth= (displayMetrics.widthPixels - 10)/10;
+        int sizeheight= (displayMetrics.heightPixels - 50)/10;
+
+        //get wall lines for path
+        for (int i = 0; i <10; i++){
+            for (int j = 0; j <10; j++){
+
+                if (map[j][i].isNorthWall()){
+                    path.moveTo(i*sizewidth, j*sizeheight);
+                    path.lineTo(i*sizewidth, (j+1)*sizeheight);
+                }
+                if (map[j][i].isSouthWall()){
+                    path.moveTo((i+1)*sizewidth, j*sizeheight);
+                    path.lineTo((i+1)*sizewidth, (j+1)*sizeheight);
+                }
+                if(map[j][i].isWestWall()){
+                    path.moveTo(i*sizewidth, j*sizeheight);
+                    path.lineTo((i+1)*sizewidth, j*sizeheight);
+                }
+                if(map[j][i].isEastWall()){
+                    path.moveTo(i*sizewidth, (j+1)*sizeheight);
+                    path.lineTo((i+1)*sizewidth, (j+1)*sizeheight);
+                }
+
+            }
+        }
+
     }
 
     public void updateBall(float xAccel, float yAccel) {
@@ -71,16 +120,16 @@ public class GameView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.drawBitmap(ball, xPos, yPos, null);
+        canvas.drawPath(path, paintWall);
         DrawMap(canvas);
         invalidate();
     }
 
     private  void DrawMap(Canvas canvas)
     {
-        MapGeneratorClass mapgen= new MapGeneratorClass();
+        /*
 
-
-        WallSegmentModel[] [] map=new WallSegmentModel[10][10];
+        WallSegmentModel[][] map=new WallSegmentModel[10][10];
 
         for( int i = 0; i < map.length; i++ )
         {
@@ -142,5 +191,7 @@ public class GameView extends View {
 
             }
         }
+
+        */
     }
 }
