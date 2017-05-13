@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import hu.obuda.uni.nik.labyrinthmaze.R;
-import hu.obuda.uni.nik.labyrinthmaze.model.HighScoreClass;
+import hu.obuda.uni.nik.labyrinthmaze.model.HighScore;
 
 /**
  * Created by Budai Krisztián on 2017. 04. 26.
@@ -24,10 +24,10 @@ public class HighScoreAdapter extends BaseAdapter {
         TextView scoreTextView;
     }
 
-    private List<HighScoreClass> highScores;
+    private List<HighScore> highScores;
     private Context context;
 
-    public HighScoreAdapter(Context context, List<HighScoreClass> highScores) {
+    public HighScoreAdapter(Context context, List<HighScore> highScores) {
         this.context = context;
         this.highScores = highScores;
     }
@@ -63,7 +63,7 @@ public class HighScoreAdapter extends BaseAdapter {
             holder = (HighScoreViewHolder) convertView.getTag();
         }
 
-        HighScoreClass highScore = highScores.get(position);
+        HighScore highScore = highScores.get(position);
 
         if (highScore.getRank() % 2 == 1) {
             convertView.setBackgroundColor(ContextCompat.getColor(context, R.color.rankings_green));

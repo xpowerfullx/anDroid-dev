@@ -15,7 +15,7 @@ import android.view.View;
 
 import java.util.ArrayList;
 
-import hu.obuda.uni.nik.labyrinthmaze.model.WallSegmentModel;
+import hu.obuda.uni.nik.labyrinthmaze.model.WallSegment;
 
 
 /**
@@ -82,16 +82,16 @@ public class GameView extends View {
 
     private  void DrawMap(Canvas canvas)
     {
-        MapGeneratorClass mapgen= new MapGeneratorClass();
+        MapGenerator mapgen= new MapGenerator();
 
 
-        WallSegmentModel[] [] map=new WallSegmentModel[10][10];
+        WallSegment[] [] map=new WallSegment[10][10];
 
         for( int i = 0; i < map.length; i++ )
         {
             for( int j = 0; j < map[i].length; j++ )
             {
-                WallSegmentModel model = new WallSegmentModel(i,j);
+                WallSegment model = new WallSegment(i,j);
                 model.setNorthWall(true);
                // model.setWestWall(true);
                // model.setSouthWall(true);

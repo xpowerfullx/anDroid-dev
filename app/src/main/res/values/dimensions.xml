@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="mainactivity_btnMargin">20dp</dimen>
+    <dimen name="mainactivity_title">50sp</dimen>
     <dimen name="highscoreactivity_titleMargin">10dp</dimen>
     <dimen name="listitem_highScoreMargin">20dp</dimen>
     <dimen name="listitem_highScoreTextMargin">5dp</dimen>
     <dimen name="listitem_highscoreRankText">40sp</dimen>
     <dimen name="listitem_highscoreNameText">30sp</dimen>
     <dimen name="listitem_highscorePointText">20sp</dimen>
+    <dimen name="activity_newPlayerTitleText">45sp</dimen>
+    <dimen name="activity_newPlayerNameText">35sp</dimen>
+    <dimen name="activity_newPlayerInfoText">35sp</dimen>
+    <dimen name="activity_ButtonText">20sp</dimen>
 </resources>

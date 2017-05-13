@@ -4,7 +4,7 @@ package hu.obuda.uni.nik.labyrinthmaze.model;
  * Created by Adam on 2017. 04. 26..
  */
 
-public class WallSegmentModel {
+public class WallSegment {
     public static final int UNPROCESSED_SEGMENT = 0;
     public static final int PROCESSED_SEGMENT = 1;
     public static final int FINAL_SEGMENT = 2;
@@ -22,7 +22,7 @@ public class WallSegmentModel {
     private int segmentY;
     private int segmentType;
 
-    public WallSegmentModel(int segmentX, int segmentY) {
+    public WallSegment(int segmentX, int segmentY) {
         this.segmentX = segmentX;
         this.segmentY = segmentY;
         segmentType = SIMPLE_SEGMENT;

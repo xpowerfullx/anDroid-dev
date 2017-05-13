@@ -32,7 +32,7 @@ public class DBHandler {
         String countQuery = "SELECT COUNT(1) FROM " + RankContract.DatabaseColumns.TABLE_NAME;
         SQLiteDatabase db = dbHelpher.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
-        int count = cursor.getInt(1);
+        int count = cursor.getCount();
         db.close();
         cursor.close();
         return count;

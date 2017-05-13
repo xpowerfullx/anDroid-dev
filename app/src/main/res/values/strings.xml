@@ -3,4 +3,8 @@
     <string name="main_btn_game">Játék</string>
     <string name="main_btn_ranks">Eredmények</string>
     <string name="main_btn_exit">Kilépés</string>
+    <string name="new_player_title">Add meg a neved!</string>
+    <string name="new_player_btn_game">Játék</string>
+    <string name="new_player_info_missing">Nem adtál meg nevet!</string>
+    <string name="new_player_info_fault">A neved nem kezdődhet és nem végződhet szóközzel!</string>
 </resources>
