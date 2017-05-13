@@ -18,14 +18,18 @@ public class WallSegmentModel {
     private boolean westWall;
     private boolean eastWall;
     private int segmentSize;
-    private float segmentX;
-    private float segmentY;
+    private int segmentX;
+    private int segmentY;
     private int segmentType;
 
     public WallSegmentModel(int segmentX, int segmentY) {
         this.segmentX = segmentX;
         this.segmentY = segmentY;
         segmentType = SIMPLE_SEGMENT;
+        northWall = true;
+        southWall = true;
+        westWall = true;
+        eastWall = true;
     }
 
     public int getSegmentType() {
@@ -40,11 +44,11 @@ public class WallSegmentModel {
         return segmentSize;
     }
 
-    public float getSegmentX() {
+    public int getSegmentX() {
         return segmentX;
     }
 
-    public float getSegmentY() {
+    public int getSegmentY() {
         return segmentY;
     }
 
