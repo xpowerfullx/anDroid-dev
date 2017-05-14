@@ -12,7 +12,6 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -21,6 +20,6 @@
             android:parentActivityName=".MainActivity"></activity>
         <activity android:name=".GameActivity"></activity>
         <activity android:name=".NewPlayerActivity"></activity>
+        <activity android:name=".ResultActivity"></activity>
     </application>
-
 </manifest>

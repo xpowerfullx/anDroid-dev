@@ -32,7 +32,8 @@ public class DBHandler {
         String countQuery = "SELECT COUNT(1) FROM " + RankContract.DatabaseColumns.TABLE_NAME;
         SQLiteDatabase db = dbHelpher.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
-        int count = cursor.getCount();
+        cursor.moveToFirst();
+        int count = cursor.getInt(0);
         db.close();
         cursor.close();
         return count;
@@ -45,5 +46,27 @@ public class DBHandler {
         result.moveToFirst();
         db.close();
         return result;
+    }
+
+    public boolean checkIfEnoughToBeRanked(int score) {
+        String selectQuery = String.format("SELECT * FROM %s ORDER BY %s ASC LIMIT 1", RankContract.DatabaseColumns.TABLE_NAME, RankContract.DatabaseColumns.COLUMN_NAME_SCORE);
+        SQLiteDatabase db = dbHelpher.getReadableDatabase();
+        Cursor dbCursor = db.rawQuery(selectQuery, null);
+        dbCursor.moveToFirst();
+        int lowestScore = dbCursor.getInt(dbCursor.getColumnIndex("score"));
+        db.close();
+        dbCursor.close();
+        return score > lowestScore;
+    }
+
+    public void removeLowestRank() {
+        String selectQuery = String.format("SELECT * FROM %s ORDER BY %s ASC LIMIT 1", RankContract.DatabaseColumns.TABLE_NAME, RankContract.DatabaseColumns.COLUMN_NAME_SCORE);
+        SQLiteDatabase db = dbHelpher.getReadableDatabase();
+        Cursor dbCursor = db.rawQuery(selectQuery, null);
+        dbCursor.moveToFirst();
+        long id = dbCursor.getLong(dbCursor.getColumnIndex("id"));
+        db.delete(RankContract.DatabaseColumns.TABLE_NAME, "ID = " + id, null);
+        db.close();
+        dbCursor.close();
     }
 }

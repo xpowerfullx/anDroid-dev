@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/listitem_highScoreMargin"
     android:weightSum="5"
-    android:background="@color/rankings_green"
+    android:background="@drawable/rankings_shape_green"
     android:orientation="horizontal">
 
     <TextView

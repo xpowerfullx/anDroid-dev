@@ -2,10 +2,7 @@ package hu.obuda.uni.nik.labyrinthmaze;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,10 +11,8 @@ import android.widget.TextView;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import hu.obuda.uni.nik.labyrinthmaze.model.Player;
-
 /**
- * Created by kiKu on 2017. 05. 13..
+ * Created by Budai Krisztián on 2017. 05. 13.
  */
 
 public class NewPlayerActivity extends AppCompatActivity {
@@ -62,9 +57,10 @@ public class NewPlayerActivity extends AppCompatActivity {
                     matcher = namePattern.matcher(name);
                     boolean nameIsOk = matcher.matches();
                     if (nameIsOk) {
-                        Intent intent = new Intent(NewPlayerActivity.this, GameActivity.class);
+                        Intent intent = new Intent(NewPlayerActivity.this, ResultActivity.class);
                         Bundle bundle = new Bundle();
                         bundle.putString("name", name);
+                        bundle.putInt("score", 12345);
                         intent.putExtras(bundle);
                         startActivity(intent);
                         finish();

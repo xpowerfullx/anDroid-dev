@@ -7,4 +7,7 @@
     <string name="new_player_btn_game">Játék</string>
     <string name="new_player_info_missing">Nem adtál meg nevet!</string>
     <string name="new_player_info_fault">A neved nem kezdődhet és nem végződhet szóközzel!</string>
+    <string name="result_title">Gratulálunk!</string>
+    <string name="result_btn_game">Új játék</string>
+    <string name="result_btn_menu">Főmenü</string>
 </resources>

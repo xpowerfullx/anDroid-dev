@@ -2,6 +2,7 @@ package hu.obuda.uni.nik.labyrinthmaze.adapter;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -66,14 +67,15 @@ public class HighScoreAdapter extends BaseAdapter {
         HighScore highScore = highScores.get(position);
 
         if (highScore.getRank() % 2 == 1) {
-            convertView.setBackgroundColor(ContextCompat.getColor(context, R.color.rankings_green));
+            convertView.setBackground(ContextCompat.getDrawable(context, R.drawable.rankings_shape_green));
         } else {
-            convertView.setBackgroundColor(ContextCompat.getColor(context, R.color.rankings_orange));
+            //convertView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
+            convertView.setBackground(ContextCompat.getDrawable(context, R.drawable.rankings_shape_primary));
         }
 
         holder.rankTextView.setText(String.valueOf(highScore.getRank()));
         holder.nameTextView.setText(highScore.getName());
-        holder.scoreTextView.setText(String.valueOf(highScore.getScore()));
+        holder.scoreTextView.setText(String.valueOf(highScore.getScore() + " pont"));
 
         return convertView;
     }

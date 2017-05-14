@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="hu.obuda.uni.nik.labyrinthmaze.HighScoreTableActivity">
+    tools:context="hu.obuda.uni.nik.labyrinthmaze.HighScoreTableActivity"
+    android:background="@color/colorPrimaryLight">
 
     <TextView
         android:id="@+id/highScoreTitle"
@@ -14,11 +15,15 @@
         android:textAlignment="center"
         android:textSize="@dimen/listitem_highscoreRankText"
         android:textStyle="bold"
-        android:layout_margin="@dimen/highscoreactivity_titleMargin"/>
+        android:layout_margin="@dimen/highscoreactivity_titleMargin"
+        android:textColor="@color/brown"/>
     <ListView
         android:id="@+id/highScoreList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/highScoreTitle"
+        android:dividerHeight="10dp"
+        android:divider="@android:color/transparent"
+        android:layout_margin="10dp"
         />
 </RelativeLayout>

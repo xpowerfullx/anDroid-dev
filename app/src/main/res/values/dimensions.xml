@@ -12,4 +12,6 @@
     <dimen name="activity_newPlayerNameText">35sp</dimen>
     <dimen name="activity_newPlayerInfoText">15sp</dimen>
     <dimen name="activity_ButtonText">20sp</dimen>
+    <dimen name="activity_resultResultText">30sp</dimen>
+    <dimen name="activity_resultTitleText">60sp</dimen>
 </resources>
