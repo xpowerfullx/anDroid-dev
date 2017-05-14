@@ -47,6 +47,7 @@ public class GameView extends View {
     private Paint paint;
     private ArrayList<RectF> Rects;
     private ArrayList<Rect> falak;
+    private  int WallType=0;
 
     public GameView(Context context, Display disp) {
         super(context);
@@ -150,14 +151,23 @@ public class GameView extends View {
         for (int i=0;i<falak.size();i++) {
             {
                 Rect aktualisFal = falak.get(i);
-                if (Math.abs(yPos - aktualisFal.top) < 2 && (aktualisFal.left < xPos && aktualisFal.right > xPos)) {
+                if (Math.abs(yPos - aktualisFal.top) < 4 && (aktualisFal.left < xPos && aktualisFal.right > xPos)) {
                     utkozes = true;
                     p = new Paint(Color.GREEN);
                     //paintWall=new Paint(Color.GREEN);
+                    if(aktualisFal.left==aktualisFal.right)
+                    {
+                        WallType=0;
+                    }
+                    else
+                    {
+                        WallType=1;
+                    }
+
                     break;
                 }
 
-                if (Math.abs(xPos - aktualisFal.left) <= 2 && (aktualisFal.top < yPos && aktualisFal.bottom < yPos)) {
+                if (Math.abs(xPos - aktualisFal.left) < 4 && (aktualisFal.top < yPos && aktualisFal.bottom < yPos)) {
                     utkozes = true;
                     p = new Paint(Color.RED);
                     break;
@@ -171,18 +181,29 @@ public class GameView extends View {
 
         if(utkozes)
         {
-            yS=0;
-            xS=0;
-            xPos=50;
-            yPos=50;
+           // yS=0;
+           // xS=0;
+            if(WallType==0) {
+                yS=0;
+            }
+
+            else
+            {
+                xS=0;
+            }
+
+            //xPos=50;
+           // yPos=50;
+
+
             //xPos--;
             //yPos--;
         }
-        else {
+
 
             xPos -= xS;
             yPos -= yS;
-        }
+
 
 
         if (xPos > xMax) {
