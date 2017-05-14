@@ -57,10 +57,9 @@ public class NewPlayerActivity extends AppCompatActivity {
                     matcher = namePattern.matcher(name);
                     boolean nameIsOk = matcher.matches();
                     if (nameIsOk) {
-                        Intent intent = new Intent(NewPlayerActivity.this, ResultActivity.class);
+                        Intent intent = new Intent(NewPlayerActivity.this, GameActivity.class);
                         Bundle bundle = new Bundle();
                         bundle.putString("name", name);
-                        bundle.putInt("score", 12345);
                         intent.putExtras(bundle);
                         startActivity(intent);
                         finish();

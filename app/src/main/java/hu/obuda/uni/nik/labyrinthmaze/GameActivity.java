@@ -17,6 +17,8 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
 
     private SensorManager sensorManager;
     private GameView gameView;
+    private String playerName;
+    private Bundle bundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,10 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
 
         setContentView(gameView);
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        bundle = getIntent().getExtras();
+        if (bundle != null){
+            playerName = bundle.getString("name");
+        }
     }
 
     protected void onStart() {

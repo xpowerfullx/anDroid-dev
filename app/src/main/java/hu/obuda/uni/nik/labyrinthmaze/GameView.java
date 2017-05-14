@@ -17,6 +17,7 @@ import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.View;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import hu.obuda.uni.nik.labyrinthmaze.model.WallSegment;
@@ -38,15 +39,18 @@ public class GameView extends View {
     Path path;
     Paint paintWall;
     boolean utkozes;
+    Paint p = new Paint(Color.BLUE);
 
     Region clip;
 
     Path path2;
     private Paint paint;
     private ArrayList<RectF> Rects;
+    private ArrayList<Rect> falak;
 
     public GameView(Context context, Display disp) {
         super(context);
+
 
         Point size = new Point();
         disp.getSize(size);
@@ -80,25 +84,48 @@ public class GameView extends View {
         ball = Bitmap.createScaledBitmap(ballSrc, dstWidth, dstHeight, true);
 
 
+        falak = new ArrayList<Rect>();
         //get wall lines for path
-        for (int i = 0; i <10; i++){
-            for (int j = 0; j <10; j++){
+        for (int i = 0; i <10; i++) {
+            for (int j = 0; j < 10; j++) {
 
-                if (map[j][i].isNorthWall()){
-                    path.moveTo(i*sizewidth, j*sizeheight);
-                    path.lineTo(i*sizewidth, (j+1)*sizeheight);
+                if (map[j][i].isNorthWall()) {
+                    path.moveTo(i * sizewidth, j * sizeheight);
+                    path.lineTo(i * sizewidth, (j + 1) * sizeheight);
+                    System.out.println("PATH: " + "X " + i * sizewidth + " " + " ||Y " + j * sizeheight + " ||X' " + i * sizewidth + " ||Y' " + (j + 1) * sizeheight);
+                    Rect r = new Rect(i * sizewidth, j * sizeheight, i * sizewidth, (j + 1) * sizeheight);
+                    falak.add(r);
+                    System.out.println("LEFT: " + r.left + " ||TOP: " + r.top + " ||Right: " + r.right + " ||Bottom: " + r.bottom);
+
                 }
-                if (map[j][i].isSouthWall()){
-                    path.moveTo((i+1)*sizewidth, j*sizeheight);
-                    path.lineTo((i+1)*sizewidth, (j+1)*sizeheight);
+                if (map[j][i].isSouthWall()) {
+                    path.moveTo((i + 1) * sizewidth, j * sizeheight);
+                    path.lineTo((i + 1) * sizewidth, (j + 1) * sizeheight);
+                    //System.out.println("PATH: " + "X " + (i + 1) * sizewidth + " " + " ||Y " + j * sizeheight +" ||X' " +(i + 1) * sizewidth + " ||Y' " + (j + 1) * sizeheight);
+
+                    Rect r = new Rect((i+1) * sizewidth, j * sizeheight, (i + 1) * sizewidth, (j + 1) * sizeheight);
+                    //System.out.println("LEFT: " + r.left + " ||TOP: " + r.top + " ||Right: " + r.right + " ||Bottom: " + r.bottom);
+
+                    falak.add(r);
+
                 }
-                if(map[j][i].isWestWall()){
-                    path.moveTo(i*sizewidth, j*sizeheight);
-                    path.lineTo((i+1)*sizewidth, j*sizeheight);
+                if (map[j][i].isWestWall()) {
+                    path.moveTo(i * sizewidth, j * sizeheight);
+                    path.lineTo((i + 1) * sizewidth, j * sizeheight);
+                    falak.add(new Rect(i * sizewidth, j * sizeheight, i * sizewidth, (j + 1) * sizeheight));
+                    //System.out.println("PATH: " + "X " + i * sizewidth + " " + " ||Y " + j * sizeheight + " ||X' " + i * sizewidth + " ||Y' " + (j + 1) * sizeheight);
+                    Rect r = new Rect(i * sizewidth, j * sizeheight, i * sizewidth, (j + 1) * sizeheight);
+                    //System.out.println("LEFT: " + r.left + " ||TOP: " + r.top + " ||Right: " + r.right + " ||Bottom: " + r.bottom);
+                    falak.add(r);
+
                 }
-                if(map[j][i].isEastWall()){
-                    path.moveTo(i*sizewidth, (j+1)*sizeheight);
-                    path.lineTo((i+1)*sizewidth, (j+1)*sizeheight);
+                if (map[j][i].isEastWall()) {
+                    path.moveTo(i * sizewidth, (j + 1) * sizeheight);
+                    path.lineTo((i + 1) * sizewidth, (j + 1) * sizeheight);
+                    //System.out.println("PATH: " +"X "+ i*sizewidth+ " "+  " ||Y " + (j+1)*sizeheight + " ||X' "+ (i+1)*sizewidth + " ||Y' "+ (j+1)*sizeheight);
+                    Rect r = new Rect(i * sizewidth, (j + 1) * sizeheight, (i + 1) * sizewidth, (j + 1) * sizeheight);
+                    //System.out.println("LEFT: " + r.left + " ||TOP: " + r.top + " ||Right: " +r. right + " ||Bottom: " + r.bottom);
+                    falak.add(r);
                 }
 
             }
@@ -108,21 +135,48 @@ public class GameView extends View {
 
     }
 
+    Rect ballB;
     public void updateBall(float xAccel, float yAccel) {
         float frameTime = 0.666f;
-        xVel += (xAccel * frameTime);
-        yVel += (yAccel * frameTime);
+        xVel = (xAccel * frameTime);
+        yVel = (yAccel * frameTime);
+
+
 
         float xS = (xVel / 2) * frameTime;
         float yS = (yVel / 2) * frameTime;
+       // ballB = new Rect((int)xPos,(int)yPos,ball.getWidth(),ball.getHeight());
+
+        for (int i=0;i<falak.size();i++) {
+            {
+                Rect aktualisFal = falak.get(i);
+                if (Math.abs(yPos - aktualisFal.top) < 2 && (aktualisFal.left < xPos && aktualisFal.right > xPos)) {
+                    utkozes = true;
+                    p = new Paint(Color.GREEN);
+                    //paintWall=new Paint(Color.GREEN);
+                    break;
+                }
+
+                if (Math.abs(xPos - aktualisFal.left) <= 2 && (aktualisFal.top < yPos && aktualisFal.bottom < yPos)) {
+                    utkozes = true;
+                    p = new Paint(Color.RED);
+                    break;
+                }
+            }
+
+
+            }
+
 
 
         if(utkozes)
         {
             yS=0;
             xS=0;
-            xPos--;
-            yPos--;
+            xPos=50;
+            yPos=50;
+            //xPos--;
+            //yPos--;
         }
         else {
 
@@ -148,18 +202,20 @@ public class GameView extends View {
             utkozes=false;
         }
 
+System.out.println("X : " +xPos +" "+ " Y"+yPos);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
       // canvas.drawBitmap(ball, xPos, yPos, null);
         canvas.drawPath(path, paintWall);
-        DrawMap(canvas);
+        //DrawMap(canvas);
 
 
         path2=new Path();
         path2.addCircle(xPos, yPos,20 , Path.Direction.CW);
-        canvas.drawPath(path2, paintWall);
+
+        canvas.drawPath(path2, p);
 
         Region region1 = new Region();
         region1.setPath(path, clip);
@@ -169,7 +225,7 @@ public class GameView extends View {
         region1.op(region2, Region.Op.INTERSECT);
         if (!region1.quickReject(region2) && region1.op(region2, Region.Op.INTERSECT)) {
 
-            utkozes=true;
+           // utkozes=true;
 
             // Collision!
         }
