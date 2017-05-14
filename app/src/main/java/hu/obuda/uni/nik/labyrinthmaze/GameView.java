@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Region;
 import android.graphics.RegionIterator;
@@ -36,8 +37,11 @@ public class GameView extends View {
     WallSegment[][] map;
     Path path;
     Paint paintWall;
+    boolean utkozes;
 
+    Region clip;
 
+    Path path2;
     private Paint paint;
     private ArrayList<RectF> Rects;
 
@@ -47,7 +51,9 @@ public class GameView extends View {
         Point size = new Point();
         disp.getSize(size);
 
+         path2 = new Path();
 
+        clip= new Region(0, 0, getWidth(), getHeight());
 
         mapgen = new MapGenerator();
         map = mapgen.generateNewMap();
@@ -69,8 +75,8 @@ public class GameView extends View {
         final int dstWidth = (displayMetrics.widthPixels - 10)/11;
         final int dstHeight = (displayMetrics.widthPixels - 10)/11;
 
-        xMax = (displayMetrics.widthPixels - 80);
-        yMax =(displayMetrics.heightPixels - 80);
+        xMax = (displayMetrics.widthPixels - 50);
+        yMax =(displayMetrics.heightPixels - 50);
         ball = Bitmap.createScaledBitmap(ballSrc, dstWidth, dstHeight, true);
 
 
@@ -110,8 +116,20 @@ public class GameView extends View {
         float xS = (xVel / 2) * frameTime;
         float yS = (yVel / 2) * frameTime;
 
-        xPos -= xS;
-        yPos -= yS;
+
+        if(utkozes)
+        {
+            yS=0;
+            xS=0;
+            xPos--;
+            yPos--;
+        }
+        else {
+
+            xPos -= xS;
+            yPos -= yS;
+        }
+
 
         if (xPos > xMax) {
             xPos = xMax;
@@ -124,15 +142,48 @@ public class GameView extends View {
         } else if (yPos < 0) {
             yPos = 0;
         }
+
+        if(utkozes)
+        {
+            utkozes=false;
+        }
+
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        canvas.drawBitmap(ball, xPos, yPos, null);
+      // canvas.drawBitmap(ball, xPos, yPos, null);
         canvas.drawPath(path, paintWall);
         DrawMap(canvas);
+
+
+        path2=new Path();
+        path2.addCircle(xPos, yPos,20 , Path.Direction.CW);
+        canvas.drawPath(path2, paintWall);
+
+        Region region1 = new Region();
+        region1.setPath(path, clip);
+        Region region2 = new Region();
+        region2.setPath(path2, clip);
+
+        region1.op(region2, Region.Op.INTERSECT);
+        if (!region1.quickReject(region2) && region1.op(region2, Region.Op.INTERSECT)) {
+
+            utkozes=true;
+
+            // Collision!
+        }
+
+
+      //  path2=new Path();
+        //path2.addCircle(xPos, yPos,2 , Path.Direction.CW);
+        //canvas.drawPath(path2, paintWall);
+
         invalidate();
     }
+
+
+
 
     private  void DrawMap(Canvas canvas)
     {
