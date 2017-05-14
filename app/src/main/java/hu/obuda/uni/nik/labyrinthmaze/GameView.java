@@ -190,18 +190,24 @@ public class GameView extends View {
 
         if(utkozes)
         {
-            xPos=50;
-            yPos=50;
+           // xPos=50;
+            //yPos=50;
 
             // yS=0;
            // xS=0;
-            if(WallType==0) {
-                yS=0;
+            if(WallType==1) {
+                if(yVel<0)
+                    yS=0;
+                else
+                    yS=yVel;
             }
 
             else
             {
+                if(xVel>0)
                 xS=0;
+                else
+                    xS=xVel;
             }
 
 
@@ -228,10 +234,9 @@ public class GameView extends View {
             yPos = 0;
         }
 
-        if(utkozes)
-        {
+
             utkozes=false;
-        }
+
 
 System.out.println("X : " +xPos +" "+ " Y"+yPos);
     }
