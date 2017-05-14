@@ -90,6 +90,8 @@ public class GameView extends View {
         redpaint.setStrokeWidth(2);
         redpaint.setStyle(Paint.Style.STROKE);
         falak = new ArrayList<Rect>();
+
+
         //get wall lines for path
         for (int i = 0; i <10; i++) {
             for (int j = 0; j < 10; j++) {
@@ -98,7 +100,7 @@ public class GameView extends View {
                     path.moveTo(i * sizewidth, j * sizeheight);
                     path.lineTo(i * sizewidth, (j + 1) * sizeheight);
                     System.out.println("PATH: " + "X " + i * sizewidth + " " + " ||Y " + j * sizeheight + " ||X' " + i * sizewidth + " ||Y' " + (j + 1) * sizeheight);
-                    Rect r = new Rect(j * sizeheight, i * sizewidth -1 , (j+1) * sizeheight, i * sizewidth +1);
+                    Rect r = new Rect(i * sizewidth -1 ,j * sizeheight,  i * sizewidth +1,(j+1) * sizeheight);
                     falak.add(r);
                     System.out.println("LEFT: " + r.left + " ||TOP: " + r.top + " ||Right: " + r.right + " ||Bottom: " + r.bottom);
 
@@ -108,7 +110,7 @@ public class GameView extends View {
                     path.lineTo((i + 1) * sizewidth, (j + 1) * sizeheight);
                     //System.out.println("PATH: " + "X " + (i + 1) * sizewidth + " " + " ||Y " + j * sizeheight +" ||X' " +(i + 1) * sizewidth + " ||Y' " + (j + 1) * sizeheight);
 
-                    Rect r = new Rect(j * sizeheight, (i+1) * sizewidth-1, (j + 1) * sizeheight, (i + 1) * sizewidth+1);
+                    Rect r = new Rect( (i+1) * sizewidth-1,j * sizeheight,  (i + 1) * sizewidth+1,(j + 1) * sizeheight);
                     //System.out.println("LEFT: " + r.left + " ||TOP: " + r.top + " ||Right: " + r.right + " ||Bottom: " + r.bottom);
 
                     falak.add(r);
@@ -119,7 +121,7 @@ public class GameView extends View {
                     path.lineTo((i + 1) * sizewidth, j * sizeheight);
                     //falak.add(new Rect(i * sizewidth, j * sizeheight, i * sizewidth, (j + 1) * sizeheight));
                     //System.out.println("PATH: " + "X " + i * sizewidth + " " + " ||Y " + j * sizeheight + " ||X' " + i * sizewidth + " ||Y' " + (j + 1) * sizeheight);
-                    Rect r = new Rect(j * sizeheight -1, i * sizewidth, j * sizeheight+1, (i + 1) * sizewidth);
+                    Rect r = new Rect( i * sizewidth,j * sizeheight -1,  (i + 1) * sizewidth,j * sizeheight+1);
                     //System.out.println("LEFT: " + r.left + " ||TOP: " + r.top + " ||Right: " + r.right + " ||Bottom: " + r.bottom);
                     falak.add(r);
 
@@ -128,13 +130,16 @@ public class GameView extends View {
                     path.moveTo(i * sizewidth, (j + 1) * sizeheight);
                     path.lineTo((i + 1) * sizewidth, (j + 1) * sizeheight);
                     //System.out.println("PATH: " +"X "+ i*sizewidth+ " "+  " ||Y " + (j+1)*sizeheight + " ||X' "+ (i+1)*sizewidth + " ||Y' "+ (j+1)*sizeheight);
-                    Rect r = new Rect((j+1) * sizeheight-1, i * sizewidth, (j + 1) * sizeheight+1, (i + 1) * sizewidth);
+                    Rect r = new Rect( i * sizewidth, (j+1) * sizeheight-1, (i + 1) * sizewidth,(j + 1) * sizeheight+1);
                     //System.out.println("LEFT: " + r.left + " ||TOP: " + r.top + " ||Right: " +r. right + " ||Bottom: " + r.bottom);
                     falak.add(r);
                 }
 
             }
         }
+
+        xPos=50;
+        yPos=50;
 
 
 
@@ -196,8 +201,6 @@ public class GameView extends View {
                 xS=0;
             }
 
-            //xPos=50;
-           // yPos=50;
 
 
             //xPos--;
