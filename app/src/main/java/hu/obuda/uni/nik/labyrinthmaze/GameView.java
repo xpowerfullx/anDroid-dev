@@ -29,8 +29,8 @@ import hu.obuda.uni.nik.labyrinthmaze.model.WallSegment;
 
 public class GameView extends View {
 
-    private float xPos, xAccel, xVel = 0.0f;
-    private float yPos, yAccel, yVel = 0.0f;
+    private float xPos=10, xAccel, xVel = 0.0f;
+    private float yPos=10, yAccel, yVel = 0.0f;
     private float xMax, yMax;
     private Bitmap ball;
     private float wall = 25.0f;
@@ -57,7 +57,7 @@ public class GameView extends View {
         Point size = new Point();
         disp.getSize(size);
 
-         path2 = new Path();
+        path2 = new Path();
 
         clip= new Region(0, 0, getWidth(), getHeight());
 
@@ -100,7 +100,7 @@ public class GameView extends View {
                     path.moveTo(i * sizewidth, j * sizeheight);
                     path.lineTo(i * sizewidth, (j + 1) * sizeheight);
                     System.out.println("PATH: " + "X " + i * sizewidth + " " + " ||Y " + j * sizeheight + " ||X' " + i * sizewidth + " ||Y' " + (j + 1) * sizeheight);
-                    Rect r = new Rect(i * sizewidth -1 ,j * sizeheight,  i * sizewidth +1,(j+1) * sizeheight);
+                    Rect r = new Rect(i * sizewidth -5 ,j * sizeheight,  i * sizewidth +5,(j+1) * sizeheight);
                     falak.add(r);
                     System.out.println("LEFT: " + r.left + " ||TOP: " + r.top + " ||Right: " + r.right + " ||Bottom: " + r.bottom);
 
@@ -110,7 +110,7 @@ public class GameView extends View {
                     path.lineTo((i + 1) * sizewidth, (j + 1) * sizeheight);
                     //System.out.println("PATH: " + "X " + (i + 1) * sizewidth + " " + " ||Y " + j * sizeheight +" ||X' " +(i + 1) * sizewidth + " ||Y' " + (j + 1) * sizeheight);
 
-                    Rect r = new Rect( (i+1) * sizewidth-1,j * sizeheight,  (i + 1) * sizewidth+1,(j + 1) * sizeheight);
+                    Rect r = new Rect( (i+1) * sizewidth-5,j * sizeheight,  (i + 1) * sizewidth+5,(j + 1) * sizeheight);
                     //System.out.println("LEFT: " + r.left + " ||TOP: " + r.top + " ||Right: " + r.right + " ||Bottom: " + r.bottom);
 
                     falak.add(r);
@@ -121,7 +121,7 @@ public class GameView extends View {
                     path.lineTo((i + 1) * sizewidth, j * sizeheight);
                     //falak.add(new Rect(i * sizewidth, j * sizeheight, i * sizewidth, (j + 1) * sizeheight));
                     //System.out.println("PATH: " + "X " + i * sizewidth + " " + " ||Y " + j * sizeheight + " ||X' " + i * sizewidth + " ||Y' " + (j + 1) * sizeheight);
-                    Rect r = new Rect( i * sizewidth,j * sizeheight -1,  (i + 1) * sizewidth,j * sizeheight+1);
+                    Rect r = new Rect( i * sizewidth,j * sizeheight -5,  (i + 1) * sizewidth,j * sizeheight+5);
                     //System.out.println("LEFT: " + r.left + " ||TOP: " + r.top + " ||Right: " + r.right + " ||Bottom: " + r.bottom);
                     falak.add(r);
 
@@ -130,7 +130,7 @@ public class GameView extends View {
                     path.moveTo(i * sizewidth, (j + 1) * sizeheight);
                     path.lineTo((i + 1) * sizewidth, (j + 1) * sizeheight);
                     //System.out.println("PATH: " +"X "+ i*sizewidth+ " "+  " ||Y " + (j+1)*sizeheight + " ||X' "+ (i+1)*sizewidth + " ||Y' "+ (j+1)*sizeheight);
-                    Rect r = new Rect( i * sizewidth, (j+1) * sizeheight-1, (i + 1) * sizewidth,(j + 1) * sizeheight+1);
+                    Rect r = new Rect( i * sizewidth, (j+1) * sizeheight-5, (i + 1) * sizewidth,(j + 1) * sizeheight+5);
                     //System.out.println("LEFT: " + r.left + " ||TOP: " + r.top + " ||Right: " +r. right + " ||Bottom: " + r.bottom);
                     falak.add(r);
                 }
@@ -138,12 +138,26 @@ public class GameView extends View {
             }
         }
 
-        xPos=50;
-        yPos=50;
+
+
+
+
+        for (int i = 0; i <10; i++) {
+            for (int j = 0; j < 10; j++) {
+
+
+            }
+        }
+
+
 
 
 
     }
+    boolean jobbrol=false;
+    boolean balrol=false;
+    boolean fentrol=false;
+    boolean lentrol=false;
 
     Rect ballB;
     public void updateBall(float xAccel, float yAccel) {
@@ -151,63 +165,79 @@ public class GameView extends View {
         xVel = (xAccel * frameTime);
         yVel = (yAccel * frameTime);
 
+        float lastXpos=xPos;
 
+        float lastYpos=xPos;
 
         float xS = (xVel / 2) * frameTime;
         float yS = (yVel / 2) * frameTime;
-       // ballB = new Rect((int)xPos,(int)yPos,ball.getWidth(),ball.getHeight());
-
+        // ballB = new Rect((int)xPos,(int)yPos,ball.getWidth(),ball.getHeight());
+        Rect aktualisFal=new Rect();
         for (int i=0;i<falak.size();i++) {
             {
-                Rect aktualisFal = falak.get(i);
+                aktualisFal = falak.get(i);
                 if (Math.abs(yPos - aktualisFal.top) < 5 && (aktualisFal.left < xPos && aktualisFal.right > xPos)) {
                     utkozes = true;
                     p = new Paint(Color.GREEN);
                     //paintWall=new Paint(Color.GREEN);
-                    if(aktualisFal.left==aktualisFal.right)
-                    {
-                        WallType=0;
-                    }
-                    else
+                    if(aktualisFal.top+10==aktualisFal.bottom)
                     {
                         WallType=1;
                     }
+                    else
+                    {
+                        WallType=0;
+                    }
+
 
                     break;
                 }
 
                 if (Math.abs(xPos - aktualisFal.left) < 5 && (aktualisFal.top < yPos && aktualisFal.bottom > yPos)) {
                     utkozes = true;
-                    p = new Paint(Color.RED);
+                    p = new Paint(Color.GREEN);
+                    //paintWall=new Paint(Color.GREEN);
+                    if(aktualisFal.top+10==aktualisFal.bottom)
+                    {
+                        WallType=1;
+                    }
+                    else
+                    {
+                        WallType=0;
+                    }
+
+
                     break;
                 }
             }
 
 
-            }
+        }
 
 
 
-        if(utkozes)
+
+
+
+
+
+        if((utkozes) )
         {
-           // xPos=50;
+
+
+
+
+            //xPos=50;
             //yPos=50;
 
             // yS=0;
-           // xS=0;
+            // xS=0;
             if(WallType==1) {
-                if(yVel<0)
-                    yS=0;
-                else
-                    yS=yVel;
+                yS=0;
             }
-
             else
             {
-                if(xVel>0)
                 xS=0;
-                else
-                    xS=xVel;
             }
 
 
@@ -217,33 +247,105 @@ public class GameView extends View {
         }
 
 
-            xPos -= xS;
-            yPos -= yS;
+        xPos -= xS;
+        yPos -= yS;
 
 
 
-        if (xPos > xMax) {
-            xPos = xMax;
-        } else if (xPos < 0) {
-            xPos = 0;
+        xVel = (xAccel * frameTime);
+        yVel = (yAccel * frameTime);
+
+        lastXpos=xPos;
+
+        lastYpos=xPos;
+
+        xS = (xVel / 2) * frameTime;
+        yS = (yVel / 2) * frameTime;
+
+
+        if(utkozes)
+        {
+
+            if(WallType==0)
+            {
+                if((aktualisFal.left-xPos)>0)
+                {
+                    balrol=true;
+                    if(xS>0)
+                    {
+                        utkozes=false;
+                    }
+                    else {
+                        xS=0;
+                    }
+
+                }
+                else
+                {
+                    jobbrol=true;
+                    if (xS<0)
+                    {
+                        utkozes=false;
+                    }
+                    else
+                    {
+                        xS=0;
+                    }
+                }
+            }
+            if(WallType==1)
+            {
+                if((aktualisFal.top-yPos)<0)
+                {
+                    lentrol=true;
+                    if (yS<0)
+                    {
+                        utkozes=false;
+                    }
+                    else
+                    {
+                        yS=0;
+                    }
+                }
+                else if((aktualisFal.bottom-yPos)>0)
+                {
+
+                    fentrol=true;
+                    if(yS>0)
+                    {
+                        utkozes=false;
+                    }
+                    else
+                    {
+                        yS=0;
+                    }
+
+
+                }
+            }
+
+
         }
 
-        if (yPos > yMax) {
-            yPos = yMax;
-        } else if (yPos < 0) {
-            yPos = 0;
-        }
+        xPos -= xS;
+        yPos -= yS;
 
 
+
+
+
+        if(utkozes)
+        {
             utkozes=false;
 
+        }
 
-System.out.println("X : " +xPos +" "+ " Y"+yPos);
+        System.out.println("X : " +xPos +" "+ " Y"+yPos);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-      // canvas.drawBitmap(ball, xPos, yPos, null);
+        // canvas.drawBitmap(ball, xPos, yPos, null);
         canvas.drawPath(path, paintWall);
         //DrawMap(canvas);
         for(int i = 0; i < falak.size(); i++){
@@ -264,13 +366,13 @@ System.out.println("X : " +xPos +" "+ " Y"+yPos);
         region1.op(region2, Region.Op.INTERSECT);
         if (!region1.quickReject(region2) && region1.op(region2, Region.Op.INTERSECT)) {
 
-           // utkozes=true;
+            // utkozes=true;
 
             // Collision!
         }
 
 
-      //  path2=new Path();
+        //  path2=new Path();
         //path2.addCircle(xPos, yPos,2 , Path.Direction.CW);
         //canvas.drawPath(path2, paintWall);
 
