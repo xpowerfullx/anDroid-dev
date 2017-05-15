@@ -100,7 +100,7 @@ public class GameView extends View {
                     path.moveTo(i * sizewidth, j * sizeheight);
                     path.lineTo(i * sizewidth, (j + 1) * sizeheight);
                     System.out.println("PATH: " + "X " + i * sizewidth + " " + " ||Y " + j * sizeheight + " ||X' " + i * sizewidth + " ||Y' " + (j + 1) * sizeheight);
-                    Rect r = new Rect(i * sizewidth -5 ,j * sizeheight,  i * sizewidth +5,(j+1) * sizeheight);
+                    Rect r = new Rect(i * sizewidth  ,j * sizeheight,  i * sizewidth ,(j+1) * sizeheight);
                     falak.add(r);
                     System.out.println("LEFT: " + r.left + " ||TOP: " + r.top + " ||Right: " + r.right + " ||Bottom: " + r.bottom);
 
@@ -110,7 +110,7 @@ public class GameView extends View {
                     path.lineTo((i + 1) * sizewidth, (j + 1) * sizeheight);
                     //System.out.println("PATH: " + "X " + (i + 1) * sizewidth + " " + " ||Y " + j * sizeheight +" ||X' " +(i + 1) * sizewidth + " ||Y' " + (j + 1) * sizeheight);
 
-                    Rect r = new Rect( (i+1) * sizewidth-5,j * sizeheight,  (i + 1) * sizewidth+5,(j + 1) * sizeheight);
+                    Rect r = new Rect( (i+1) * sizewidth,j * sizeheight,  (i + 1) * sizewidth,(j + 1) * sizeheight);
                     //System.out.println("LEFT: " + r.left + " ||TOP: " + r.top + " ||Right: " + r.right + " ||Bottom: " + r.bottom);
 
                     falak.add(r);
@@ -121,7 +121,7 @@ public class GameView extends View {
                     path.lineTo((i + 1) * sizewidth, j * sizeheight);
                     //falak.add(new Rect(i * sizewidth, j * sizeheight, i * sizewidth, (j + 1) * sizeheight));
                     //System.out.println("PATH: " + "X " + i * sizewidth + " " + " ||Y " + j * sizeheight + " ||X' " + i * sizewidth + " ||Y' " + (j + 1) * sizeheight);
-                    Rect r = new Rect( i * sizewidth,j * sizeheight -5,  (i + 1) * sizewidth,j * sizeheight+5);
+                    Rect r = new Rect( i * sizewidth,j * sizeheight ,  (i + 1) * sizewidth,j * sizeheight);
                     //System.out.println("LEFT: " + r.left + " ||TOP: " + r.top + " ||Right: " + r.right + " ||Bottom: " + r.bottom);
                     falak.add(r);
 
@@ -130,7 +130,7 @@ public class GameView extends View {
                     path.moveTo(i * sizewidth, (j + 1) * sizeheight);
                     path.lineTo((i + 1) * sizewidth, (j + 1) * sizeheight);
                     //System.out.println("PATH: " +"X "+ i*sizewidth+ " "+  " ||Y " + (j+1)*sizeheight + " ||X' "+ (i+1)*sizewidth + " ||Y' "+ (j+1)*sizeheight);
-                    Rect r = new Rect( i * sizewidth, (j+1) * sizeheight-5, (i + 1) * sizewidth,(j + 1) * sizeheight+5);
+                    Rect r = new Rect( i * sizewidth, (j+1) * sizeheight, (i + 1) * sizewidth,(j + 1) * sizeheight);
                     //System.out.println("LEFT: " + r.left + " ||TOP: " + r.top + " ||Right: " +r. right + " ||Bottom: " + r.bottom);
                     falak.add(r);
                 }
@@ -180,7 +180,7 @@ public class GameView extends View {
                     utkozes = true;
                     p = new Paint(Color.GREEN);
                     //paintWall=new Paint(Color.GREEN);
-                    if(aktualisFal.top+10==aktualisFal.bottom)
+                    if(aktualisFal.top==aktualisFal.bottom)
                     {
                         WallType=1;
                     }
@@ -255,9 +255,9 @@ public class GameView extends View {
         xVel = (xAccel * frameTime);
         yVel = (yAccel * frameTime);
 
-        lastXpos=xPos;
 
-        lastYpos=xPos;
+
+
 
         xS = (xVel / 2) * frameTime;
         yS = (yVel / 2) * frameTime;
@@ -270,7 +270,7 @@ public class GameView extends View {
             {
                 if((aktualisFal.left-xPos)>0)
                 {
-                    balrol=true;
+                   // balrol
                     if(xS>0)
                     {
                         utkozes=false;
@@ -282,7 +282,7 @@ public class GameView extends View {
                 }
                 else
                 {
-                    jobbrol=true;
+                   // jobbrol
                     if (xS<0)
                     {
                         utkozes=false;
@@ -297,7 +297,7 @@ public class GameView extends View {
             {
                 if((aktualisFal.top-yPos)<0)
                 {
-                    lentrol=true;
+                    //lentrol
                     if (yS<0)
                     {
                         utkozes=false;
@@ -310,7 +310,7 @@ public class GameView extends View {
                 else if((aktualisFal.bottom-yPos)>0)
                 {
 
-                    fentrol=true;
+                  //  fentrol
                     if(yS>0)
                     {
                         utkozes=false;
