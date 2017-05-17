@@ -2,6 +2,9 @@ package hu.obuda.uni.nik.labyrinthmaze.model;
 
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.RectF;
+
+import java.util.Random;
 
 /**
  * Created by Adam on 2017. 04. 27..
@@ -9,31 +12,36 @@ import android.graphics.Paint;
 
 public class Hole {
 
-    private float holeX;
-    private float holeY;
-    private int holeRadius;
-    private Paint holeColor;
+    public  static Random rand = new Random();
+    private RectF rect;
+    private Paint paintHole;
 
-    public Hole(float holeX, float holeY) {
-        this.holeX = holeX;
-        this.holeY = holeY;
-        holeRadius = 50;
-        holeColor.setColor(Color.GRAY);
+
+    public Hole(RectF rect) {
+        this.setRect(rect);
+        setPaintHole(new Paint());
+        getPaintHole().setColor(Color.BLUE);
+        getPaintHole().setStrokeWidth(3);
+        getPaintHole().setStyle(Paint.Style.FILL);
+
     }
 
-    public float getHoleX() {
-        return holeX;
+
+
+
+    public Paint getPaintHole() {
+        return paintHole;
     }
 
-    public float getHoleY() {
-        return holeY;
+    public void setPaintHole(Paint paintHole) {
+        this.paintHole = paintHole;
     }
 
-    public int getHoleRadius() {
-        return holeRadius;
+    public RectF getRect() {
+        return rect;
     }
 
-    public Paint getHoleColor() {
-        return holeColor;
+    public void setRect(RectF rect) {
+        this.rect = rect;
     }
 }

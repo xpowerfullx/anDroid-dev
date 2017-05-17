@@ -19,7 +19,10 @@ import android.view.View;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
+import hu.obuda.uni.nik.labyrinthmaze.model.Hole;
 import hu.obuda.uni.nik.labyrinthmaze.model.WallSegment;
 
 
@@ -28,6 +31,7 @@ import hu.obuda.uni.nik.labyrinthmaze.model.WallSegment;
  */
 
 public class GameView extends View {
+
 
     private float xPos=10, xAccel, xVel = 0.0f;
     private float yPos=10, yAccel, yVel = 0.0f;
@@ -38,26 +42,33 @@ public class GameView extends View {
     WallSegment[][] map;
     Path path;
     Paint paintWall;
+     HoleGenerator hl;
     boolean utkozes;
     Paint p = new Paint(Color.BLUE);
 
-    Region clip;
 
+    Region clip;
+    int sizewidth;
+    int sizeheight;
     Path path2;
     private Paint paint;
     private Paint redpaint;
     private ArrayList<RectF> Rects;
     private ArrayList<Rect> falak;
     private  int WallType=0;
+    List<RectF> recktek = new ArrayList<RectF>();
 
     public GameView(Context context, Display disp) {
         super(context);
-
 
         Point size = new Point();
         disp.getSize(size);
 
         path2 = new Path();
+
+
+
+
 
         clip= new Region(0, 0, getWidth(), getHeight());
 
@@ -68,14 +79,19 @@ public class GameView extends View {
         paintWall.setColor(Color.BLACK);
         paintWall.setStrokeWidth(2);
         paintWall.setStyle(Paint.Style.STROKE);
+
         DisplayMetrics displayMetrics = new DisplayMetrics();
         ((Activity) getContext()).getWindowManager()
                 .getDefaultDisplay()
                 .getMetrics(displayMetrics);
+        sizewidth= (displayMetrics.widthPixels - 10)/10;
+        sizeheight= (displayMetrics.heightPixels - 50)/10;
+
+        hl = new HoleGenerator(sizewidth,sizeheight);
 
 
-        int sizewidth= (displayMetrics.widthPixels - 10)/10;
-        int sizeheight= (displayMetrics.heightPixels - 50)/10;
+
+
 
         Bitmap ballSrc = BitmapFactory.decodeResource(getResources(), R.drawable.ball);
         final int dstWidth = (displayMetrics.widthPixels - 10)/11;
@@ -141,13 +157,6 @@ public class GameView extends View {
 
 
 
-
-        for (int i = 0; i <10; i++) {
-            for (int j = 0; j < 10; j++) {
-
-
-            }
-        }
 
 
 
@@ -386,6 +395,17 @@ public class GameView extends View {
         //  path2=new Path();
         //path2.addCircle(xPos, yPos,2 , Path.Direction.CW);
         //canvas.drawPath(path2, paintWall);
+
+        for(int i =0; i<hl.getHoles().size();i++){
+
+            canvas.drawOval(hl.getHoles().get(i).getRect(),hl.getHoles().get(i).getPaintHole());
+
+        }
+
+
+
+
+
 
         invalidate();
     }

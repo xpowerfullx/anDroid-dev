@@ -13,6 +13,8 @@ import android.os.Bundle;
 import android.view.Display;
 import android.view.View;
 
+import java.util.Random;
+
 public class GameActivity extends AppCompatActivity implements SensorEventListener2 {
 
     private SensorManager sensorManager;
@@ -64,4 +66,5 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
     }
+
 }
