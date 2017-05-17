@@ -35,19 +35,22 @@ public class GameView extends View {
     private WallSegment[][] map;
     private Path path;
     private Paint paintWall;
-    private boolean utkozes;
+    private boolean collision;
+
+
     private Paint p = new Paint(Color.BLUE);
     private Rect endZone;
     private Region clip;
 
     private Path path2;
     private Paint redpaint;
-    private ArrayList<Rect> falak;
+    private ArrayList<Rect> Walls;
     private int WallType = 0;
     private int sizewidth;
     private int sizeheight;
     private int screenWidth;
     private int screenHeight;
+    HoleGenerator hl;
 
     public GameView(Context context, Display disp) {
         super(context);
@@ -72,10 +75,14 @@ public class GameView extends View {
                 .getMetrics(displayMetrics);
 
 
+
+
         sizewidth = (displayMetrics.widthPixels) / 10;
         sizeheight = (displayMetrics.heightPixels) / 10;
         screenWidth = displayMetrics.widthPixels;
         screenHeight = displayMetrics.heightPixels;
+
+        hl = new HoleGenerator(sizewidth,sizeheight);
 
         endZone = new Rect(screenWidth - sizewidth, screenHeight - sizeheight, screenWidth, screenHeight);
 
@@ -83,7 +90,7 @@ public class GameView extends View {
         redpaint.setColor(Color.RED);
         redpaint.setStrokeWidth(2);
         redpaint.setStyle(Paint.Style.STROKE);
-        falak = new ArrayList<Rect>();
+        Walls = new ArrayList<Rect>();
         getWallLinesForPath();
     }
 
@@ -95,28 +102,28 @@ public class GameView extends View {
                     path.moveTo(i * sizewidth, j * sizeheight);
                     path.lineTo(i * sizewidth, (j + 1) * sizeheight);
                     Rect r = new Rect(i * sizewidth, j * sizeheight, i * sizewidth, (j + 1) * sizeheight);
-                    falak.add(r);
+                    Walls.add(r);
 
                 }
                 if (map[j][i].isSouthWall()) {
                     path.moveTo((i + 1) * sizewidth, j * sizeheight);
                     path.lineTo((i + 1) * sizewidth, (j + 1) * sizeheight);
                     Rect r = new Rect((i + 1) * sizewidth, j * sizeheight, (i + 1) * sizewidth, (j + 1) * sizeheight);
-                    falak.add(r);
+                    Walls.add(r);
 
                 }
                 if (map[j][i].isWestWall()) {
                     path.moveTo(i * sizewidth, j * sizeheight);
                     path.lineTo((i + 1) * sizewidth, j * sizeheight);
                     Rect r = new Rect(i * sizewidth, j * sizeheight, (i + 1) * sizewidth, j * sizeheight);
-                    falak.add(r);
+                    Walls.add(r);
 
                 }
                 if (map[j][i].isEastWall()) {
                     path.moveTo(i * sizewidth, (j + 1) * sizeheight);
                     path.lineTo((i + 1) * sizewidth, (j + 1) * sizeheight);
                     Rect r = new Rect(i * sizewidth, (j + 1) * sizeheight, (i + 1) * sizewidth, (j + 1) * sizeheight);
-                    falak.add(r);
+                    Walls.add(r);
                 }
 
             }
@@ -133,14 +140,33 @@ public class GameView extends View {
 
         float xS = (xVel / 2) * frameTime;
         float yS = (yVel / 2) * frameTime;
-        Rect aktualisFal = new Rect();
-        for (int i = 0; i < falak.size(); i++) {
+
+
+
+        for(int i =0; i<hl.getHoles().size();i++){
+
+            RectF CurrentHole= hl.getHoles().get(i).getRect();
+            if (Math.abs(yPos - CurrentHole.top) < 5 && (CurrentHole.left < xPos && CurrentHole.right > xPos)) {
+
+
+                yPos=10;
+                xPos=10;
+
+            }
+
+        }
+
+
+
+
+        Rect CurrentWall = new Rect();
+        for (int i = 0; i < Walls.size(); i++) {
             {
-                aktualisFal = falak.get(i);
-                if (Math.abs(yPos - aktualisFal.top) < 5 && (aktualisFal.left < xPos && aktualisFal.right > xPos)) {
-                    utkozes = true;
+                CurrentWall = Walls.get(i);
+                if (Math.abs(yPos - CurrentWall.top) < 5 && (CurrentWall.left < xPos && CurrentWall.right > xPos)) {
+                    collision = true;
                     p = new Paint(Color.GREEN);
-                    if (aktualisFal.top == aktualisFal.bottom) {
+                    if (CurrentWall.top == CurrentWall.bottom) {
                         WallType = 1;
                     } else {
                         WallType = 0;
@@ -150,10 +176,10 @@ public class GameView extends View {
                     break;
                 }
 
-                if (Math.abs(xPos - aktualisFal.left) < 5 && (aktualisFal.top < yPos && aktualisFal.bottom > yPos)) {
-                    utkozes = true;
+                if (Math.abs(xPos - CurrentWall.left) < 5 && (CurrentWall.top < yPos && CurrentWall.bottom > yPos)) {
+                    collision = true;
                     p = new Paint(Color.GREEN);
-                    if (aktualisFal.top + 10 == aktualisFal.bottom) {
+                    if (CurrentWall.top + 10 == CurrentWall.bottom) {
                         WallType = 1;
                     } else {
                         WallType = 0;
@@ -168,7 +194,7 @@ public class GameView extends View {
         }
 
 
-        if ((utkozes)) {
+        if ((collision)) {
             if (WallType == 1) {
                 if (yS > 0)
                     yPos += 5;
@@ -200,13 +226,13 @@ public class GameView extends View {
         yS = (yVel / 2) * frameTime;
 
 
-        if (utkozes) {
+        if (collision) {
 
             if (WallType == 0) {
-                if ((aktualisFal.left - xPos) > 0) {
+                if ((CurrentWall.left - xPos) > 0) {
                     // balrol
                     if (xS > 0) {
-                        utkozes = false;
+                        collision = false;
                     } else {
                         xS = 0;
                     }
@@ -214,25 +240,25 @@ public class GameView extends View {
                 } else {
                     // jobbrol
                     if (xS < 0) {
-                        utkozes = false;
+                        collision = false;
                     } else {
                         xS = 0;
                     }
                 }
             }
             if (WallType == 1) {
-                if ((aktualisFal.top - yPos) < 0) {
+                if ((CurrentWall.top - yPos) < 0) {
                     //lentrol
                     if (yS < 0) {
-                        utkozes = false;
+                        collision = false;
                     } else {
                         yS = 0;
                     }
-                } else if ((aktualisFal.bottom - yPos) > 0) {
+                } else if ((CurrentWall.bottom - yPos) > 0) {
 
                     //  fentrol
                     if (yS > 0) {
-                        utkozes = false;
+                        collision = false;
                     } else {
                         yS = 0;
                     }
@@ -248,15 +274,15 @@ public class GameView extends View {
         yPos -= yS;
 
 
-        if (utkozes) {
-            utkozes = false;
+        if (collision) {
+            collision = false;
 
         }
         if (Math.abs((int) xPos - endZone.centerX()) <= 5 && Math.abs((int) yPos - endZone.centerY()) <= 5) {
 
             map = mapgen.generateNewMap();
             path = new Path();
-            falak.clear();
+            Walls.clear();
             getWallLinesForPath();
             xPos = 50;
             yPos = 50;
@@ -268,8 +294,8 @@ public class GameView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.drawPath(path, paintWall);
-        for (int i = 0; i < falak.size(); i++) {
-            canvas.drawRect(falak.get(i), redpaint);
+        for (int i = 0; i < Walls.size(); i++) {
+            canvas.drawRect(Walls.get(i), redpaint);
         }
         endZone = new Rect(screenWidth - sizewidth, screenHeight - sizeheight, screenWidth, screenHeight);
 
@@ -279,6 +305,12 @@ public class GameView extends View {
         canvas.drawRect(endZone, endZonePaint);
         path2 = new Path();
         path2.addCircle(xPos, yPos, 20, Path.Direction.CW);
+
+        for(int i =0; i<hl.getHoles().size();i++){
+
+            canvas.drawOval(hl.getHoles().get(i).getRect(),hl.getHoles().get(i).getPaintHole());
+
+        }
 
         canvas.drawPath(path2, p);
         invalidate();
