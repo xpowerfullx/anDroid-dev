@@ -233,10 +233,21 @@ public class GameView extends View {
             // yS=0;
             // xS=0;
             if(WallType==1) {
+                if(yS>0)
+                    yPos += 5;
+                else
+                yPos-=5;
                 yS=0;
+
+
             }
             else
             {
+                if(xS>0)
+                    xPos+=5;
+                else
+                  xPos-=5;
+
                 xS=0;
             }
 
