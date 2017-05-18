@@ -27,10 +27,11 @@ public class HoleGenerator {
     public void GenerateHoles(){
         for (int i = 0; i<10; i++){
             for (int j = 0; j < 10; j++) {
-                if(Hole.rand.nextInt(100)<20){
-
-                    RectF rect = new RectF((i*w),j*h,(i*w)+50,(j*h)+50);
-                    getHoles().add(new Hole(rect));
+                if(Hole.rand.nextInt(100)<30){
+                    if((i!=0 && j!=0) && (i!=9 && j !=9)) {
+                        RectF rect = new RectF((i * w), j * h, (i * w) + 50, (j * h) + 50);
+                        getHoles().add(new Hole(rect));
+                    }
 
                 }
             }

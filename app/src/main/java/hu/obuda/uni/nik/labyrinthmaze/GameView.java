@@ -22,6 +22,8 @@ import java.util.ArrayList;
 
 import hu.obuda.uni.nik.labyrinthmaze.model.WallSegment;
 
+import static android.R.attr.value;
+
 
 /**
  * Created by Tomi on 2017. 04. 26..
@@ -84,6 +86,7 @@ public class GameView extends View {
 
         hl = new HoleGenerator(sizewidth,sizeheight);
 
+
         endZone = new Rect(screenWidth - sizewidth, screenHeight - sizeheight, screenWidth, screenHeight);
 
         redpaint = new Paint();
@@ -132,7 +135,7 @@ public class GameView extends View {
 
 
 
-    public void updateBall(float xAccel, float yAccel) {
+    public void updateBall(float xAccel, float yAccel) throws InterruptedException {
         float frameTime = 0.666f;
         xVel = (xAccel * frameTime);
         yVel = (yAccel * frameTime);
@@ -278,12 +281,22 @@ public class GameView extends View {
             collision = false;
 
         }
-        if (Math.abs((int) xPos - endZone.centerX()) <= 5 && Math.abs((int) yPos - endZone.centerY()) <= 5) {
+        if (Math.abs((int) xPos - endZone.centerX()) <= 15 && Math.abs((int) yPos - endZone.centerY()) <= 15) {
 
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    hl = null;
+                    hl = new HoleGenerator(sizewidth,sizeheight);
+                }});
+
+            t.start();
+            t.join();
             map = mapgen.generateNewMap();
             path = new Path();
             Walls.clear();
             getWallLinesForPath();
+
             xPos = 50;
             yPos = 50;
 

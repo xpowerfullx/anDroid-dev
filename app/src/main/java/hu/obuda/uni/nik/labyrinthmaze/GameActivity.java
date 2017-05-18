@@ -58,7 +58,11 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
             float xAccel = sensorEvent.values[0];
             float yAccel = -sensorEvent.values[1];
-            gameView.updateBall(xAccel, yAccel);
+            try {
+                gameView.updateBall(xAccel, yAccel);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
