@@ -2,6 +2,7 @@ package hu.obuda.uni.nik.labyrinthmaze;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -12,15 +13,16 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Region;
-import android.graphics.RegionIterator;
+import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.View;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import hu.obuda.uni.nik.labyrinthmaze.model.WallSegment;
+import hu.obuda.uni.nik.labyrinthmaze.utils.HoleGenerator;
+import hu.obuda.uni.nik.labyrinthmaze.utils.MapGenerator;
+import hu.obuda.uni.nik.labyrinthmaze.utils.ScoreGenerator;
 
 import static android.R.attr.value;
 
@@ -38,12 +40,9 @@ public class GameView extends View {
     private Path path;
     private Paint paintWall;
     private boolean collision;
-
-
     private Paint p = new Paint(Color.BLUE);
     private Rect endZone;
     private Region clip;
-
     private Path path2;
     private Paint redpaint;
     private ArrayList<Rect> Walls;
@@ -52,18 +51,19 @@ public class GameView extends View {
     private int sizeheight;
     private int screenWidth;
     private int screenHeight;
-    HoleGenerator hl;
+    private HoleGenerator hl;
+    private ScoreGenerator scoreGenerator;
+    private int mapCounter;
+    private String playerName;
+    private double playerScore;
+    private Context context;
 
-    public GameView(Context context, Display disp) {
+    public GameView(Context context, Display disp, String playerName) {
         super(context);
-
         Point size = new Point();
         disp.getSize(size);
-
         path2 = new Path();
-
         clip = new Region(0, 0, getWidth(), getHeight());
-
         mapgen = new MapGenerator();
         map = mapgen.generateNewMap();
         path = new Path();
@@ -75,92 +75,73 @@ public class GameView extends View {
         ((Activity) getContext()).getWindowManager()
                 .getDefaultDisplay()
                 .getMetrics(displayMetrics);
-
-
-
-
         sizewidth = (displayMetrics.widthPixels) / 10;
         sizeheight = (displayMetrics.heightPixels) / 10;
         screenWidth = displayMetrics.widthPixels;
         screenHeight = displayMetrics.heightPixels;
-
         hl = new HoleGenerator(sizewidth,sizeheight);
-
-
         endZone = new Rect(screenWidth - sizewidth, screenHeight - sizeheight, screenWidth, screenHeight);
-
         redpaint = new Paint();
         redpaint.setColor(Color.RED);
         redpaint.setStrokeWidth(2);
         redpaint.setStyle(Paint.Style.STROKE);
         Walls = new ArrayList<Rect>();
         getWallLinesForPath();
+        scoreGenerator = new ScoreGenerator();
+        scoreGenerator.start();
+        mapCounter = 0;
+        this.context = context;
     }
 
     private void getWallLinesForPath() {
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
-
                 if (map[j][i].isNorthWall()) {
                     path.moveTo(i * sizewidth, j * sizeheight);
                     path.lineTo(i * sizewidth, (j + 1) * sizeheight);
                     Rect r = new Rect(i * sizewidth, j * sizeheight, i * sizewidth, (j + 1) * sizeheight);
                     Walls.add(r);
-
                 }
+
                 if (map[j][i].isSouthWall()) {
                     path.moveTo((i + 1) * sizewidth, j * sizeheight);
                     path.lineTo((i + 1) * sizewidth, (j + 1) * sizeheight);
                     Rect r = new Rect((i + 1) * sizewidth, j * sizeheight, (i + 1) * sizewidth, (j + 1) * sizeheight);
                     Walls.add(r);
-
                 }
+
                 if (map[j][i].isWestWall()) {
                     path.moveTo(i * sizewidth, j * sizeheight);
                     path.lineTo((i + 1) * sizewidth, j * sizeheight);
                     Rect r = new Rect(i * sizewidth, j * sizeheight, (i + 1) * sizewidth, j * sizeheight);
                     Walls.add(r);
-
                 }
+
                 if (map[j][i].isEastWall()) {
                     path.moveTo(i * sizewidth, (j + 1) * sizeheight);
                     path.lineTo((i + 1) * sizewidth, (j + 1) * sizeheight);
                     Rect r = new Rect(i * sizewidth, (j + 1) * sizeheight, (i + 1) * sizewidth, (j + 1) * sizeheight);
                     Walls.add(r);
                 }
-
             }
         }
     }
-
-
 
     public void updateBall(float xAccel, float yAccel) throws InterruptedException {
         float frameTime = 0.666f;
         xVel = (xAccel * frameTime);
         yVel = (yAccel * frameTime);
-
-
         float xS = (xVel / 2) * frameTime;
         float yS = (yVel / 2) * frameTime;
 
-
-
         for(int i =0; i<hl.getHoles().size();i++){
-
             RectF CurrentHole= hl.getHoles().get(i).getRect();
             if (Math.abs(yPos - CurrentHole.top) < 5 && (CurrentHole.left < xPos && CurrentHole.right > xPos)) {
-
-
                 yPos=10;
                 xPos=10;
-
+                scoreGenerator.calculatePenalty();
             }
-
         }
-
-
-
 
         Rect CurrentWall = new Rect();
         for (int i = 0; i < Walls.size(); i++) {
@@ -174,8 +155,6 @@ public class GameView extends View {
                     } else {
                         WallType = 0;
                     }
-
-
                     break;
                 }
 
@@ -187,15 +166,10 @@ public class GameView extends View {
                     } else {
                         WallType = 0;
                     }
-
-
                     break;
                 }
             }
-
-
         }
-
 
         if ((collision)) {
             if (WallType == 1) {
@@ -204,8 +178,6 @@ public class GameView extends View {
                 else
                     yPos -= 5;
                 yS = 0;
-
-
             } else {
                 if (xS > 0)
                     xPos += 5;
@@ -216,21 +188,14 @@ public class GameView extends View {
             }
         }
 
-
         xPos -= xS;
         yPos -= yS;
-
-
         xVel = (xAccel * frameTime);
         yVel = (yAccel * frameTime);
-
-
         xS = (xVel / 2) * frameTime;
         yS = (yVel / 2) * frameTime;
 
-
         if (collision) {
-
             if (WallType == 0) {
                 if ((CurrentWall.left - xPos) > 0) {
                     // balrol
@@ -239,7 +204,6 @@ public class GameView extends View {
                     } else {
                         xS = 0;
                     }
-
                 } else {
                     // jobbrol
                     if (xS < 0) {
@@ -258,31 +222,24 @@ public class GameView extends View {
                         yS = 0;
                     }
                 } else if ((CurrentWall.bottom - yPos) > 0) {
-
                     //  fentrol
                     if (yS > 0) {
                         collision = false;
                     } else {
                         yS = 0;
                     }
-
-
                 }
             }
-
-
         }
 
         xPos -= xS;
         yPos -= yS;
 
-
         if (collision) {
             collision = false;
-
         }
-        if (Math.abs((int) xPos - endZone.centerX()) <= 15 && Math.abs((int) yPos - endZone.centerY()) <= 15) {
 
+        if (Math.abs((int) xPos - endZone.centerX()) <= 15 && Math.abs((int) yPos - endZone.centerY()) <= 15) {
             Thread t = new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -296,7 +253,14 @@ public class GameView extends View {
             path = new Path();
             Walls.clear();
             getWallLinesForPath();
-
+            scoreGenerator.nextMap();
+            if (mapCounter < 5) {
+                mapCounter++;
+            } else {
+                scoreGenerator.end();
+                playerScore = scoreGenerator.getScore();
+                endGame();
+            }
             xPos = 50;
             yPos = 50;
 
@@ -320,12 +284,19 @@ public class GameView extends View {
         path2.addCircle(xPos, yPos, 20, Path.Direction.CW);
 
         for(int i =0; i<hl.getHoles().size();i++){
-
             canvas.drawOval(hl.getHoles().get(i).getRect(),hl.getHoles().get(i).getPaintHole());
-
         }
 
         canvas.drawPath(path2, p);
         invalidate();
+    }
+
+    private void endGame() {
+        Intent intent = new Intent(context, ResultActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("name", playerName);
+        bundle.putInt("score", (int)playerScore);
+        intent.putExtras(bundle);
+        context.startActivity(intent);
     }
 }

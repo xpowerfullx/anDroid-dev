@@ -28,14 +28,13 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_game);
         Display display = getWindowManager().getDefaultDisplay();
-        gameView = new GameView(this, display);
-
-        setContentView(gameView);
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         bundle = getIntent().getExtras();
         if (bundle != null){
             playerName = bundle.getString("name");
         }
+        gameView = new GameView(this, display, playerName);
+        setContentView(gameView);
     }
 
     protected void onStart() {

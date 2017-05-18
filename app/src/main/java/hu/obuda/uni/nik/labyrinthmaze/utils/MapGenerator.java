@@ -1,4 +1,4 @@
-package hu.obuda.uni.nik.labyrinthmaze;
+package hu.obuda.uni.nik.labyrinthmaze.utils;
 
 import java.util.ArrayList;
 import java.util.List;
